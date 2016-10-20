@@ -1,16 +1,49 @@
 from flask import Flask, jsonify
 import pandas as pd
 import pymongo
+import psycopg2
 
 app = Flask(__name__)
 
-def mongoconnect():
-	client = MongoClient('<ec2-instance_ip>', 27017)
+ec2_ip = '<>'
+
+def postgrescmd():
+	conn = psycopg2.connect(user="mcga", password="Welcome1", host=ec2_ip)
+	crs = conn.cursor()
+
+	# test table creation
+	crs.execute("""
+		CREATE TABLE test (
+			author VARCHAR(50),
+			message VARCHAR(100)
+		);
+	""")
+
+	# test table insertion
+	crs.execute("""
+		INSERT INTO test (author, message)
+			VALUES ('mcga', 'hello world')
+	""")
+
+	# test table querying
+	crs.execute("""
+		SELECT author, message FROM test;
+	""")
+
+	cols = [desc[0] for desc in crs.description]
+
+	res = crs.fetch_one()
+
+	return dict(zip(cols, res))
+
+
+def mongocmd():
+	client = MongoClient(ec2_ip, 27017)
 	db = client.test
 	coll = db.coll
 
 	# test an insertion
-	test_post = {'author': 'Sid', 'text': 'hello_world'}
+	test_post = {'author': 'mcga', 'text': 'hello_world'}
 	uid = coll.insert_one(test_post).inserted_id
 
 	# test a retrieval
@@ -35,8 +68,14 @@ def test():
 
 @app.route("/mongotest")
 def mongo():
-	res = mongoconnect()
+	res = mongocmd()
 	return jsonify(author=res['author'], text=res['text'])
+
+
+@app.route("/pgtest")
+def postgres():
+	res = postgrescmd()
+	return jsonify(author=res['author'], message=res['message'])
 
 
 if __name__ == "__main__":
