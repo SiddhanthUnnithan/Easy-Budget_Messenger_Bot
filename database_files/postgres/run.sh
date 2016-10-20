@@ -1,0 +1,1 @@
+docker run -d -it -p 5432:5432 -v /Users/cvq595/Repositories/GTC-Hackathon/postgres/pgdata:/data/pgdata -e POSTGRES_USER=mcga -e POSTGRES_PASSWORD=Welcome1 -e PGDATA=/data/pgdata --name=postgres postgres
