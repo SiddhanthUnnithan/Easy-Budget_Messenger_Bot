@@ -1,3 +1,3 @@
-cp mongo ../../mongo
+cp -r mongo ../../mongo
 
-cp postgres ../../postgres
+cp -r postgres ../../postgres
