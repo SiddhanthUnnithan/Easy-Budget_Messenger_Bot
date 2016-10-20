@@ -1,11 +1,11 @@
 from flask import Flask, jsonify
 import pandas as pd
-import pymongo
+from pymongo import MongoClient
 import psycopg2
 
 app = Flask(__name__)
 
-ec2_ip = '<>'
+ec2_ip = '54.224.111.118'
 
 def postgrescmd():
 	conn = psycopg2.connect(user="mcga", password="Welcome1", host=ec2_ip)
@@ -32,7 +32,7 @@ def postgrescmd():
 
 	cols = [desc[0] for desc in crs.description]
 
-	res = crs.fetch_one()
+	res = crs.fetchone()
 
 	return dict(zip(cols, res))
 
@@ -47,7 +47,7 @@ def mongocmd():
 	uid = coll.insert_one(test_post).inserted_id
 
 	# test a retrieval
-	res = coll.find_one("_id":uid)
+	res = coll.find_one({"_id":uid})
 
 	if res is None:
 		return "Empty result set."
