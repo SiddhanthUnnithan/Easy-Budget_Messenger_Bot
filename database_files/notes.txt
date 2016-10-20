@@ -1,0 +1,3 @@
+Both of these directories should be copied outside of this, such that we do not commit the database files.
+
+That is, the run.sh and remove.sh files should be executed in separate directories (i.e. siblings to mcga-flask/). 
