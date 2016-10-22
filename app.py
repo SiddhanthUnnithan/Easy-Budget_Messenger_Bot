@@ -227,8 +227,7 @@ def webhook():
 					message_payload = messaging_event["postback"]["payload"]
 
 					if message_payload == "SET_INCOME":
-						send_message(sender_id, {"text": "WHAT???"})
-						continue
+						pass
 					if message_payload == "SET_EXPENSES":
 						pass
 					if message_payload == "GOAL_VISUALIZATION":
