@@ -186,6 +186,16 @@ def webhook():
 				print messaging_event["sender"]
 				sender_id = messaging_event["sender"]["id"]
 
+				if messaging_event.get("postback"):
+					# user clicked/tapped "postback" button in earlier message
+					message_text = messaging_event["postback"]["payload"]
+
+					if message_text == "Yes":
+						send_message(sender_id, {"text": "She said YES!!!"})
+						continue
+					if message_text == "No":
+						send_message(sender_id, {"text": "She said no..."})
+						continue
 
 				if messaging_event.get("message"):
 					# message has been received
@@ -205,9 +215,7 @@ def webhook():
 					# optin confirmation
 					pass
 
-				if messaging_event.get("postback"):
-					# user clicked/tapped "postback" button in earlier message
-					pass
+
 
 	return "ok", 200
 
