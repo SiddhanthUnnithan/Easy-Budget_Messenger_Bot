@@ -1,5 +1,3 @@
-use budget
-
 db.state.insert({
 	"states": ["goal_desc", "goal_title", "goal_amount", "curr_balance"],
 	"map": {
@@ -17,4 +15,4 @@ db.state.insert({
 			"answer": null
 		}
 	}
-})
+});
