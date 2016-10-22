@@ -176,7 +176,7 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					if message_text == "Options":
-						send_message(sender_id, messageData)
+						send_message(sender_id, message_data)
 						continue
 					
 					send_message(sender_id, {"text": "messaged received, thanks!"})
