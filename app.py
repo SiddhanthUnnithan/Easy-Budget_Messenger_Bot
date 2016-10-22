@@ -240,6 +240,7 @@ def webhook():
 					# check to see if user exists in database
 					res = user_coll.find_one({"user_id": sender_id})
 
+					log(res)
 					if res is None or res["is_onboarded"] == False:
 						# onboard user
 						if not state_map["goal_title"]["is_message_sent"]:
