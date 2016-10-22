@@ -113,7 +113,23 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
-	message_data = {
+	main_quick_reply = {
+		"text": "Would you like to see your balance",
+		"quick_replies": [
+			{
+				"content_type": "text",
+				"title": "Yes",
+				"payload": "SEE_BALANCE_YES"
+			},
+			{
+				"content_type": "text",
+				"title": "No",
+				"payload": "SEE_BALANCE_NO"
+			}
+		]
+	}
+
+	main_carousel = {
 		"attachment": {
 			"type": "template",
 			"payload": {
@@ -175,11 +191,11 @@ def webhook():
 					# message has been received
 					message_text = messaging_event["message"]["text"]
 
-					if message_text == "Options":
-						send_message(sender_id, message_data)
+					if message_text == "Main Menu":
+						send_message(sender_id, main_carousel)
 						continue
 
-					send_message(sender_id, {"text": "messaged received, thanks!"})
+					send_message(sender_id, main_quick_reply)
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
