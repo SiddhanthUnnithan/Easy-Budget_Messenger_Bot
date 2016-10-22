@@ -10,7 +10,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-ec2_ip = '54.224.111.118'
+ec2_ip = '52.205.251.79'
 
 # mongo client instantiation
 client = MongoClient(ec2_ip, 27017)
