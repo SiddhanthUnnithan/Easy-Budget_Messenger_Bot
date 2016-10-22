@@ -233,7 +233,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_title)
 							state_map["goal_title"]["is_message_sent"] = True
 							continue
-						else if state_map["goal_title"]["answer"] == None:
+						elif state_map["goal_title"]["answer"] == None:
 							state_map["goal_title"]["answer"] = message_text
 							#save to mongo
 
@@ -241,7 +241,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_desc)
 							state_map["goal_desc"]["is_message_sent"] = True
 							continue
-						else if state_map["goal_desc"]["answer"] == None:
+						elif state_map["goal_desc"]["answer"] == None:
 							state_map["goal_desc"]["answer"] = message_text
 							#save to mongo	
 
@@ -249,7 +249,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_amount)
 							state_map["goal_amount"]["is_message_sent"] = True
 							continue
-						else if state_map["goal_amount"]["answer"] == None:
+						elif state_map["goal_amount"]["answer"] == None:
 							state_map["goal_amount"]["answer"] = message_text
 							# future work: ask for confirmation
 							#save to mongo
@@ -258,7 +258,7 @@ def webhook():
 							send_message(sender_id, onboarding_curr_balance)
 							state_map["curr_balance"]["is_message_sent"] = True
 							continue
-						else if state_map["curr_balance"]["answer"] == None:
+						elif state_map["curr_balance"]["answer"] == None:
 							state_map["curr_balance"]["answer"] = message_text
 							# save to mongo
 							# user has completed onboarding - update mongo
