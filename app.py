@@ -19,6 +19,7 @@ db = client.budget
 user_coll = db.users
 trxn_coll = db.trxn
 state_coll = db.state
+goal_coll = db.goals
 
 # HELPERS
 def log(message):
@@ -233,7 +234,21 @@ def webhook():
 					# check to see if user exists in database
 					res = user_coll.find_one({"user_id": sender_id})
 
+					if res is None:
+						# insert user in collection
+						user_coll.insert({
+							"user_id": sender_id,
+							"is_onboarded": False
+							"current_balance": None
+						})
+
 					if res is None or res["is_onboarded"] == False:
+						# create goal record in mongo database
+						goal_coll.insert(
+							{"user_id": sender_id, "goal_title": None,
+							 "goal_desc": None, "goal_amount": None,
+							 "is_achieved": False})
+
 						# onboard user
 						if not state_map["goal_title"]["is_message_sent"]:
 							send_message(sender_id, onboarding_greeting)
@@ -244,9 +259,12 @@ def webhook():
 								}
 							}, upsert=False)
 							continue
-						elif state_map["goal_title"]["answer"] is None:
-							state_map["goal_title"]["answer"] = message_text
-							#save to mongo
+						elif goal_coll.find_one({"user_id": sender_id})["goal_title"] is None:
+							goal_coll.update({"user_id": sender_id}, {
+								"$set": {
+									"goal_title" = message_text 
+								}
+							}, upsert=False)
 
 						if not state_map["goal_desc"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_desc)
@@ -256,9 +274,12 @@ def webhook():
 								}
 							}, upsert=False)
 							continue
-						elif state_map["goal_desc"]["answer"] is None:
-							state_map["goal_desc"]["answer"] = message_text
-							#save to mongo	
+						elif goal_coll.find_one({"user_id": sender_id})["goal_desc"] is None:
+							goal_coll.update({"user_id": sender_id}, {
+								"$set": {
+									"goal_desc" = message_text 
+								}
+							}, upsert=False)	
 
 						if not state_map["goal_amount"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_amount)
@@ -268,10 +289,13 @@ def webhook():
 								}
 							}, upsert=False)
 							continue
-						elif state_map["goal_amount"]["answer"] is None:
-							state_map["goal_amount"]["answer"] = message_text
+						elif goal_coll.find_one({"user_id": sender_id})["goal_amount"] is None:
+							goal_coll.update({"user_id": sender_id}, {
+								"$set": {
+									"goal_amount" = float(message_text) 
+								}
+							}, upsert=False)
 							# future work: ask for confirmation
-							#save to mongo
 
 						if not state_map["curr_balance"]["is_message_sent"]:
 							send_message(sender_id, onboarding_curr_balance)
@@ -281,19 +305,33 @@ def webhook():
 								}
 							}, upsert=False)
 							continue
-						elif state_map["curr_balance"]["answer"] is None:
-							state_map["curr_balance"]["answer"] = message_text
-							# save to mongo
-							# user has completed onboarding - update mongo
-							summary = {"text": "worked!"}
+						elif user_coll.find_one({"user_id": sender_id})["current_balance"] is None:
+							user_coll.update({"user_id": sender_id}, {
+								"$set": {
+									"current_balance" = float(message_text) 
+								}
+							}, upsert=False)
 
-							# summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s" \
-							# 	% (state_map["goal_title"]["answer"], state_map["goal_desc"]["answer"],
-							# 	   state_map["goal_amount"]["answer"], state_map["curr_balance"]["answer"])
+							user_goal = goal_coll.find_one({"user_id": sender_id})
+
+							summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s"  \
+								% (user_goal["goal_title"], user_goal["goal_desc"], user_goal["goal_amount"],
+								   user_coll.find_one({"user_id": sender_id})["current_balance"])
+
+							# update the user record to complete onboarding
+							user_coll.update({"user_id": sender_id}, {
+								"$set": {
+									"is_onboarded" = True 
+								}
+							}, upsert=False)
 
 							send_message(sender_id, summary)
 
 						continue
+
+					# income
+
+					# expenses
 
 					if "quick_reply" in messaging_event["message"]:
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
@@ -325,7 +363,7 @@ def webhook():
 
 
 	return "ok", 200
-	
+
 
 @app.route("/mongotest")
 def mongo():
