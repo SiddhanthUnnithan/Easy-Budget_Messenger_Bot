@@ -18,8 +18,8 @@ def log(message):
 	sys.stdout.flush()
 
 
-def send_message(recipient_id, message_text):
-	log("sending message to %s: %s" % (recipient_id, message_text))
+def send_message(recipient_id, message_data):
+	log("sending message to %s" % (recipient_id))
 
 	params = {
 		"access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -33,9 +33,7 @@ def send_message(recipient_id, message_text):
 		"recipient": {
             "id": recipient_id
         },
-        "message": {
-            "text": message_text
-        }
+        "message": message_data
 	})
 
 	r = requests.post("https://graph.facebook.com/v2.6/me/messages",
@@ -115,17 +113,77 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
+	message_data = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+                    "title": "Add Income",
+                    "subtitle": "Add Instantaneous Income",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Set Income Amount",
+	                        "payload": "Payload for first element in a generic bubble"
+	                    }
+                    ],
+                }, {
+                    "title": "Expenditure",
+                    "subtitle": "Add Instantaneous Expenditure",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Set Expenditure Amount",
+	                        "payload": "Payload for second element in a generic bubble"
+	                    }
+                    ],
+                },
+                {
+                	"title": "Set A Goal",
+                	"subtitle": "Goal Setting Card.",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "Add Goal",
+                			"payload": "Payload for first button in third element"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Review Goals",
+                			"payload": "Payload for second button in third element"
+                		}
+                	]
+                }]
+			}
+		}
+	}
+
 	if data["object"] == "page":
 
 		for entry in data["entry"]:
 			for messaging_event in entry["messaging"]:
+				print messaging_event["sender"]
+				sender_id = messaging_event["sender"]["id"]
+
+
 				if messaging_event.get("message"):
 					# message has been received
-					sender_id = messaging_event["sender"]["id"]
-					recipient_id = messaging_event["recipient"]["id"]
 					message_text = messaging_event["message"]["text"]
 
+<<<<<<< HEAD
 					send_message(sender_id, "Yo!")
+=======
+					if message_text == "Options":
+						send_message(sender_id, message_data)
+						continue
+					
+					send_message(sender_id, {"text": "messaged received, thanks!"})
+>>>>>>> 3bfb4ef96c3fb30ae96b19ff98d8663b4f4a7a2d
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
@@ -140,12 +198,6 @@ def webhook():
 					pass
 
 	return "ok", 200
-
-#
-# @app.route("/test")
-# def test():
-# 	data = pd.DataFrame([1,2,3])[0].tolist()
-# 	return jsonify(values=data)
 
 
 @app.route("/mongotest")
