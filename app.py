@@ -258,6 +258,22 @@ def webhook():
                 			"payload": "GOAL_VISUALIZATION"
                 		}
                 	]
+                },
+                {
+                	"title": "Viasdsualization",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+						{
+							"type": "postback",
+							"title": "Transactions",
+							"payload": "TRXN_VISUALIZATION"
+						},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		}
+                	]
                 }]
 			}
 		}
