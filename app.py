@@ -170,7 +170,7 @@ def webhook():
 	}
 
 	onboarding_data = {
-		"text": "Prosper Canada wants to make budgeting personal :). This chatbot will help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
+		"text": "Hey! Prosper Canada wants to make budgeting personal :). I'm here to help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
 	}
 
 	if data["object"] == "page":
