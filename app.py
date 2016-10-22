@@ -53,54 +53,6 @@ def send_message(recipient_id, message_data):
 		log(r.text)
 
 
-def postgrescmd():
-	conn = psycopg2.connect(user="mcga", password="Welcome1", host=ec2_ip)
-	crs = conn.cursor()
-
-	# test table creation
-	crs.execute("""
-		CREATE TABLE test (
-			author VARCHAR(50),
-			message VARCHAR(100)
-		);
-	""")
-
-	# test table insertion
-	crs.execute("""
-		INSERT INTO test (author, message)
-			VALUES ('mcga', 'hello world')
-	""")
-
-	# test table querying
-	crs.execute("""
-		SELECT author, message FROM test;
-	""")
-
-	cols = [desc[0] for desc in crs.description]
-
-	res = crs.fetchone()
-
-	return dict(zip(cols, res))
-
-
-def mongocmd():
-	client = MongoClient(ec2_ip, 27017)
-	db = client.test
-	coll = db.coll
-
-	# test an insertion
-	test_post = {'author': 'mcga', 'text': 'hello_world'}
-	uid = coll.insert_one(test_post).inserted_id
-
-	# test a retrieval
-	res = coll.find_one({"_id":uid})
-
-	if res is None:
-		return "Empty result set."
-
-	return res
-
-
 @app.route("/", methods=['GET'])
 def verify():
 	"""
@@ -219,7 +171,6 @@ def webhook():
 
 		for entry in data["entry"]:
 			for messaging_event in entry["messaging"]:
-				print messaging_event["sender"]
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
@@ -239,7 +190,7 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = user_coll.find_one({"user_id": int(sender_id)})
+					res = user_coll.find_one({"user_id": sender_id})
 
 					if res is None:
 						# insert user in collection
@@ -339,9 +290,6 @@ def webhook():
 
 						continue
 
-					# income
-
-					# expenses
 
 					if messaging_event["message"].get("quick_reply"):
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
@@ -373,19 +321,6 @@ def webhook():
 
 
 	return "ok", 200
-
-
-@app.route("/mongotest")
-def mongo():
-	# res = mongocmd()
-	# return jsonify(author=res['author'], text=res['text'])
-	return "mongotest -- placeholder"
-
-@app.route("/pgtest")
-def postgres():
-	# res = postgrescmd()
-	# return jsonify(author=res['author'], message=res['message'])
-	return "pgtest -- placeholder"
 
 
 if __name__ == "__main__":
