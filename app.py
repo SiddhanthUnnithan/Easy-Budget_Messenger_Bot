@@ -117,7 +117,7 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
-	trxn_coll = db.trxn
+	user_coll = db.user
 
 	message_data = {
 		"attachment": {
@@ -170,10 +170,7 @@ def webhook():
 	}
 
 	onboarding_data = {
-		"setting_type": "greeting",
-		"greeting": {
-			"text": "Hi {{user_first_name}}, welcome to ProsperCA's Easy Budget Bot."
-		}
+		"text": "Prosper Canada wants to make budgeting personal :). This chatbot will help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
 	}
 
 	if data["object"] == "page":
@@ -189,9 +186,9 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = trxn_coll.find_one({"user_id": sender_id})
+					res = user_coll.find_one({"user_id": sender_id})
 
-					if res is None:
+					if res is None or res["is_onboarded"] == False:
 						# onboard user
 						send_message(sender_id, onboarding_data)
 						continue
