@@ -201,13 +201,16 @@ def webhook():
 				if messaging_event.get("message"):
 					# message has been received
 					message_text = messaging_event["message"]["text"]
-					message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
-					if message_payload == "SEE_BALANCE_YES":
-						send_message(sender_id, {"text": "She said YES!!!"})
-						continue
-					if message_payload == "SEE_BALANCE_NO":
-						send_message(sender_id, {"text": "She said no..."})
+					if !("quick_reply" in messaging_event["message"]):
+						message_payload = messaging_event["message"]["quick_reply"]["payload"]
+
+						if message_payload == "SEE_BALANCE_YES":
+							send_message(sender_id, {"text": "She said YES!!!"})
+							continue
+						if message_payload == "SEE_BALANCE_NO":
+							send_message(sender_id, {"text": "She said no..."})
+							continue
 						continue
 
 					if message_text == "Main Menu":
