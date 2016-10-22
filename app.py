@@ -183,6 +183,11 @@ def webhook():
                 	"title": "Visualization",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
+						{
+							"type": "postback",
+							"title": "Visualize your transactions",
+							"payload": "TRXN_VISUALIZATION"
+						},
                 		{
                 			"type": "postback",
                 			"title": "Visualize Your Goal",
@@ -230,8 +235,12 @@ def webhook():
 						pass
 					if message_payload == "SET_EXPENSES":
 						pass
+					if message_payload == "TRXN_VISUALIZATION":
+						#get transaction URL
+						send_message(sender_id, {"text": "Transaction visualization: http://google.com"})
 					if message_payload == "GOAL_VISUALIZATION":
-						pass
+						#get goal URL
+						send_message(sender_id, {"text": "Goal visualization: http://google.com"})
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
