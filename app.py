@@ -185,12 +185,87 @@ def webhook():
                 	"buttons": [
 						{
 							"type": "postback",
-							"title": "Visualize your transactions",
+							"title": "Transactions",
 							"payload": "TRXN_VISUALIZATION"
 						},
                 		{
                 			"type": "postback",
-                			"title": "Visualize Your Goal",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
+                			"payload": "GOAL_VISUALIZATION"
+                		},
+                		{
+                			"type": "postback",
+                			"title": "Goal",
                 			"payload": "GOAL_VISUALIZATION"
                 		}
                 	]
