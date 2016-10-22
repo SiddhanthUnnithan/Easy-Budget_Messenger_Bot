@@ -19,7 +19,7 @@ def log(message):
 
 
 def send_message(recipient_id, message_data):
-	log("sending message to %s: %s" % (recipient_id, message_text))
+	log("sending message to %s" % (recipient_id))
 
 	params = {
 		"access_token": os.environ["PAGE_ACCESS_TOKEN"]
