@@ -262,7 +262,7 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_title"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_title" = message_text 
+									"goal_title" : message_text 
 								}
 							}, upsert=False)
 
@@ -277,7 +277,7 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_desc"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_desc" = message_text 
+									"goal_desc" : message_text 
 								}
 							}, upsert=False)	
 
@@ -292,7 +292,7 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_amount"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_amount" = float(message_text) 
+									"goal_amount" : float(message_text) 
 								}
 							}, upsert=False)
 							# future work: ask for confirmation
@@ -308,7 +308,7 @@ def webhook():
 						elif user_coll.find_one({"user_id": sender_id})["current_balance"] is None:
 							user_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"current_balance" = float(message_text) 
+									"current_balance" : float(message_text) 
 								}
 							}, upsert=False)
 
@@ -321,7 +321,7 @@ def webhook():
 							# update the user record to complete onboarding
 							user_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"is_onboarded" = True 
+									"is_onboarded" : True 
 								}
 							}, upsert=False)
 
