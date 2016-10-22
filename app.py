@@ -188,18 +188,27 @@ def webhook():
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
-					message_text = messaging_event["postback"]["payload"]
-
-					if message_text == "Yes":
-						send_message(sender_id, {"text": "She said YES!!!"})
-						continue
-					if message_text == "No":
-						send_message(sender_id, {"text": "She said no..."})
-						continue
+					# message_text = messaging_event["postback"]["payload"]
+					#
+					# if message_text == "Yes":
+					# 	send_message(sender_id, {"text": "She said YES!!!"})
+					# 	continue
+					# if message_text == "No":
+					# 	send_message(sender_id, {"text": "She said no..."})
+					# 	continue
+					pass
 
 				if messaging_event.get("message"):
 					# message has been received
 					message_text = messaging_event["message"]["text"]
+					message_payload = messaging_event["message"]["quick_reply"]["payload"]
+
+					if message_payload == "SEE_BALANCE_YES":
+						send_message(sender_id, {"text": "She said YES!!!"})
+						continue
+					if message_payload == "SEE_BALANCE_NO":
+						send_message(sender_id, {"text": "She said no..."})
+						continue
 
 					if message_text == "Main Menu":
 						send_message(sender_id, main_carousel)
