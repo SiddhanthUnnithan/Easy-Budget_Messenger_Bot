@@ -15,8 +15,10 @@ ec2_ip = '52.205.251.79'
 # mongo client instantiation
 client = MongoClient(ec2_ip, 27017)
 db = client.budget
-
-map_on = False
+# relevant collections
+user_coll = db.users
+trxn_coll = db.trxn
+state_coll = db.state
 
 # HELPERS
 def log(message):
@@ -116,21 +118,13 @@ def verify():
 def webhook():
 	# process incoming messaging events
 
-	if not map_on:
-		# master state map
-		state_arr = ["goal_desc", "goal_title", "goal_amount", "curr_balance"]
-
-		state_map = {node: {"is_message_sent": False, "answer": None} 
-					 for node in state_arr}
-
-		map_on = True
+	# retrieve state map from mongo
+	state_map = state_coll.find_one()
 
 	print state_map
 
 	data = request.get_json()
 	log(data)
-
-	user_coll = db.user
 
 	main_quick_reply = {
 		"text": "Would you like to see your balance",
