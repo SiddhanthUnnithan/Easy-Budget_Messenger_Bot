@@ -196,7 +196,7 @@ def webhook():
                 	]
                 },
                 {
-                	"title": "Visualization",
+                	"title": "Visusdfalization",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
 						{
@@ -212,7 +212,7 @@ def webhook():
                 	]
                 },
                 {
-                	"title": "Visualization",
+                	"title": "Visualidfgzation",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
 						{
@@ -228,7 +228,7 @@ def webhook():
                 	]
                 },
                 {
-                	"title": "Visualization",
+                	"title": "Visualizasdation",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
 						{
@@ -244,151 +244,7 @@ def webhook():
                 	]
                 },
                 {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
-						},
-                		{
-                			"type": "postback",
-                			"title": "Goal",
-                			"payload": "GOAL_VISUALIZATION"
-                		}
-                	]
-                },
-                {
-                	"title": "Visualization",
+                	"title": "Visualwerization",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
 						{
