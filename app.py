@@ -238,7 +238,7 @@ def webhook():
 						# insert user in collection
 						user_coll.insert({
 							"user_id": sender_id,
-							"is_onboarded": False
+							"is_onboarded": False,
 							"current_balance": None
 						})
 
