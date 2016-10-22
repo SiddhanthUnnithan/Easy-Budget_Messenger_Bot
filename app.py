@@ -12,6 +12,10 @@ app = Flask(__name__)
 
 ec2_ip = '54.224.111.118'
 
+# mongo client instantiation
+client = MongoClient(ec2_ip, 27017)
+db = client.budget
+
 # HELPERS
 def log(message):
 	print(str(message))
@@ -113,6 +117,8 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
+	trxn_coll = db.trxn
+
 	message_data = {
 		"attachment": {
 			"type": "template",
@@ -163,17 +169,32 @@ def webhook():
 		}
 	}
 
+	onboarding_data = {
+		"setting_type": "greeting",
+		"greeting": {
+			"text": "Hi {{user_first_name}}, welcome to ProsperCA's Easy Budget Bot."
+		}
+	}
+
 	if data["object"] == "page":
 
 		for entry in data["entry"]:
 			for messaging_event in entry["messaging"]:
 				print messaging_event["sender"]
 				sender_id = messaging_event["sender"]["id"]
-
+				recipient_id = messaging_event["recipient"]["id"]
 
 				if messaging_event.get("message"):
-					# message has been received
+					# arbitrary message has been received
 					message_text = messaging_event["message"]["text"]
+
+					# check to see if user exists in database
+					res = trxn.find_one({"user_id": sender_id})
+
+					if res is None:
+						# onboard user
+						send_message(sender_id, onboarding_data)
+						continue
 
 					if message_text == "Options":
 						send_message(sender_id, message_data)
