@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-import pandas as pd
+# import pandas as pd
 from pymongo import MongoClient
 import psycopg2
 
@@ -59,11 +59,11 @@ def mongocmd():
 def hello_world():
 	return "hello world"
 
-
-@app.route("/test")
-def test():
-	data = pd.DataFrame([1,2,3])[0].tolist()
-	return jsonify(values=data)
+#
+# @app.route("/test")
+# def test():
+# 	data = pd.DataFrame([1,2,3])[0].tolist()
+# 	return jsonify(values=data)
 
 
 @app.route("/mongotest")
