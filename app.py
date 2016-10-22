@@ -275,8 +275,7 @@ def webhook():
 							user_goal = goal_coll.find_one({"user_id": sender_id})
 
 							summary = "Here's a summary of your goals: Goal Title: %s, Goal Desc: %s, Goal Amount: %s."  \
-								% (user_goal["goal_title"], user_goal["goal_desc"], user_goal["goal_amount"],
-								   user_coll.find_one({"user_id": sender_id})["current_balance"])
+								% (user_goal["goal_title"], user_goal["goal_desc"], user_goal["goal_amount"])
 
 							# update the user record to complete onboarding
 							user_coll.update({"user_id": sender_id}, {
