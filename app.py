@@ -175,15 +175,11 @@ def webhook():
 					# message has been received
 					message_text = messaging_event["message"]["text"]
 
-<<<<<<< HEAD
-					send_message(sender_id, "Yo!")
-=======
 					if message_text == "Options":
 						send_message(sender_id, message_data)
 						continue
-					
+
 					send_message(sender_id, {"text": "messaged received, thanks!"})
->>>>>>> 3bfb4ef96c3fb30ae96b19ff98d8663b4f4a7a2d
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
