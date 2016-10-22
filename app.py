@@ -314,7 +314,7 @@ def webhook():
 
 							user_goal = goal_coll.find_one({"user_id": sender_id})
 
-							summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s"  \
+							summary = "Here's a summary of your goals: Goal Title: %s, Goal Desc: %s, Goal Amount: %s."  \
 								% (user_goal["goal_title"], user_goal["goal_desc"], user_goal["goal_amount"],
 								   user_coll.find_one({"user_id": sender_id})["current_balance"])
 
@@ -326,6 +326,7 @@ def webhook():
 							}, upsert=False)
 
 							send_message(sender_id, {"text": summary})
+							send_message(sender_id, main_quick_reply)
 
 						continue
 
