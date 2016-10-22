@@ -129,6 +129,10 @@ def webhook():
 		]
 	}
 
+	main_balance = {
+		"text": "Your balance is over $9000!!!"
+	}
+
 	main_carousel = {
 		"attachment": {
 			"type": "template",
@@ -188,14 +192,6 @@ def webhook():
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
-					# message_text = messaging_event["postback"]["payload"]
-					#
-					# if message_text == "Yes":
-					# 	send_message(sender_id, {"text": "She said YES!!!"})
-					# 	continue
-					# if message_text == "No":
-					# 	send_message(sender_id, {"text": "She said no..."})
-					# 	continue
 					pass
 
 				if messaging_event.get("message"):
@@ -206,14 +202,16 @@ def webhook():
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
-							send_message(sender_id, {"text": "She said YES!!!"})
+							send_message(sender_id, main_balance)
+							send_message(sender_id, main_carousel)
 							continue
 						if message_payload == "SEE_BALANCE_NO":
-							send_message(sender_id, {"text": "She said no..."})
+							send_message(sender_id, {"text": "Then have a nice day."})
 							continue
 						continue
 
 					if message_text == "Main Menu":
+						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 						continue
 
