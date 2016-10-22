@@ -202,7 +202,7 @@ def webhook():
 					# message has been received
 					message_text = messaging_event["message"]["text"]
 
-					if !("quick_reply" in messaging_event["message"]):
+					if not ("quick_reply" in messaging_event["message"]):
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
