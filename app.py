@@ -227,7 +227,8 @@ def webhook():
 					message_payload = messaging_event["postback"]["payload"]
 
 					if message_payload == "SET_INCOME":
-						pass
+						send_message(sender_id, {"text": "WHAT???"})
+						continue
 					if message_payload == "SET_EXPENSES":
 						pass
 					if message_payload == "GOAL_VISUALIZATION":
@@ -238,9 +239,8 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = user_coll.find_one({"user_id": sender_id})
+					res = user_coll.find_one({"user_id": int(sender_id)})
 
-					log(res)
 					if res is None or res["is_onboarded"] == False:
 						# onboard user
 						if not state_map["goal_title"]["is_message_sent"]:
