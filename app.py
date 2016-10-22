@@ -16,11 +16,7 @@ ec2_ip = '52.205.251.79'
 client = MongoClient(ec2_ip, 27017)
 db = client.budget
 
-# master state map
-state_arr = ["goal_desc", "goal_title", "goal_amount", "curr_balance"]
-
-state_map = {node: {"is_message_sent": False, "answer": None} 
-			 for node in state_arr}
+map_on = False
 
 # HELPERS
 def log(message):
@@ -119,6 +115,15 @@ def verify():
 @app.route("/", methods=["POST"])
 def webhook():
 	# process incoming messaging events
+
+	if not map_on:
+		# master state map
+		state_arr = ["goal_desc", "goal_title", "goal_amount", "curr_balance"]
+
+		state_map = {node: {"is_message_sent": False, "answer": None} 
+					 for node in state_arr}
+
+		map_on = True
 
 	print state_map
 
