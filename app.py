@@ -16,6 +16,12 @@ ec2_ip = '52.205.251.79'
 client = MongoClient(ec2_ip, 27017)
 db = client.budget
 
+# master state map
+state_arr = ["goal_desc", "goal_title", "goal_amount", "curr_balance"]
+
+state_map = {node: {"is_message_sent": False, "answer": None} 
+			 for node in state_arr}
+
 # HELPERS
 def log(message):
 	print(str(message))
@@ -119,7 +125,27 @@ def webhook():
 
 	user_coll = db.user
 
-	message_data = {
+	main_quick_reply = {
+		"text": "Would you like to see your balance",
+		"quick_replies": [
+			{
+				"content_type": "text",
+				"title": "Yes",
+				"payload": "SEE_BALANCE_YES"
+			},
+			{
+				"content_type": "text",
+				"title": "No",
+				"payload": "SEE_BALANCE_NO"
+			}
+		]
+	}
+
+	main_balance = {
+		"text": "Your balance is over $9000!!!"
+	}
+
+	main_carousel = {
 		"attachment": {
 			"type": "template",
 			"payload": {
@@ -127,7 +153,6 @@ def webhook():
 				"elements": [
 				{
                     "title": "Add Income",
-                    "subtitle": "Add Instantaneous Income",
                     "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                     "buttons": [
 	                    {
@@ -137,8 +162,7 @@ def webhook():
 	                    }
                     ],
                 }, {
-                    "title": "Expenditure",
-                    "subtitle": "Add Instantaneous Expenditure",
+                    "title": "Add Expenditure",
                     "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     "buttons": [
 	                    {
@@ -149,19 +173,13 @@ def webhook():
                     ],
                 },
                 {
-                	"title": "Set A Goal",
-                	"subtitle": "Goal Setting Card.",
+                	"title": "Contribute To Your Goal",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Add Goal",
+                			"title": "Set Amount To Contribute",
                 			"payload": "Payload for first button in third element"
-                		},
-                		{
-                			"type": "postback",
-                			"title": "Review Goals",
-                			"payload": "Payload for second button in third element"
                 		}
                 	]
                 }]
@@ -169,8 +187,24 @@ def webhook():
 		}
 	}
 
-	onboarding_data = {
+	onboarding_greeting = {
 		"text": "Hey! Prosper Canada wants to make budgeting personal :). I'm here to help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
+	}
+
+	onboarding_goal_title = {
+		"text": "Let's get started by creating a goal for you. What would you like to name your goal?"
+	}
+
+	onboarding_goal_desc = {
+		"text": "Great, please add a small description for your goal."
+	}
+
+	onboarding_goal_amount = {
+		"text": "Awesome! What would you like your goal amount to be?"
+	}
+
+	onboarding_curr_balance = {
+		"text": "Great, for final touches I'm going to need you to enter your current balance."
 	}
 
 	if data["object"] == "page":
@@ -181,6 +215,10 @@ def webhook():
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
+				if messaging_event.get("postback"):
+					# user clicked/tapped "postback" button in earlier message
+					pass
+
 				if messaging_event.get("message"):
 					# arbitrary message has been received
 					message_text = messaging_event["message"]["text"]
@@ -190,14 +228,66 @@ def webhook():
 
 					if res is None or res["is_onboarded"] == False:
 						# onboard user
-						send_message(sender_id, onboarding_data)
+						if not state_map["goal_title"]["is_message_sent"]:
+							send_message(sender_id, onboarding_greeting)
+							send_message(sender_id, onboarding_goal_title)
+							state_map["goal_title"]["is_message_sent"] = True
+							continue
+						else if state_map["goal_title"]["answer"] == None:
+							state_map["goal_title"]["answer"] = message_text
+							#save to mongo
+
+						if not state_map["goal_desc"]["is_message_sent"]:
+							send_message(sender_id, onboarding_goal_desc)
+							state_map["goal_desc"]["is_message_sent"] = True
+							continue
+						else if state_map["goal_desc"]["answer"] == None:
+							state_map["goal_desc"]["answer"] = message_text
+							#save to mongo	
+
+						if not state_map["goal_amount"]["is_message_sent"]:
+							send_message(sender_id, onboarding_goal_amount)
+							state_map["goal_amount"]["is_message_sent"] = True
+							continue
+						else if state_map["goal_amount"]["answer"] == None:
+							state_map["goal_amount"]["answer"] = message_text
+							# future work: ask for confirmation
+							#save to mongo
+
+						if not state_map["curr_balance"]["is_message_sent"]:
+							send_message(sender_id, onboarding_curr_balance)
+							state_map["curr_balance"]["is_message_sent"] = True
+							continue
+						else if state_map["curr_balance"]["answer"] == None:
+							state_map["curr_balance"]["answer"] = message_text
+							# save to mongo
+							# user has completed onboarding - update mongo
+							summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s" \
+								% (state_map["goal_title"]["answer"], state_map["goal_desc"]["answer"],
+								   state_map["goal_amount"]["answer"], state_map["curr_balance"]["answer"])
+
+							send_message(sender_id, summary)
+
 						continue
 
-					if message_text == "Options":
-						send_message(sender_id, message_data)
+					if "quick_reply" in messaging_event["message"]:
+						message_payload = messaging_event["message"]["quick_reply"]["payload"]
+
+						if message_payload == "SEE_BALANCE_YES":
+							send_message(sender_id, main_balance)
+							send_message(sender_id, main_carousel)
+							continue
+						if message_payload == "SEE_BALANCE_NO":
+							send_message(sender_id, {"text": "Then have a nice day."})
+							continue
 						continue
-					
-					send_message(sender_id, {"text": "messaged received, thanks!"})
+
+					if message_text == "Main Menu":
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
+						continue
+
+					send_message(sender_id, main_quick_reply)
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
@@ -207,12 +297,10 @@ def webhook():
 					# optin confirmation
 					pass
 
-				if messaging_event.get("postback"):
-					# user clicked/tapped "postback" button in earlier message
-					pass
+
 
 	return "ok", 200
-
+	
 
 @app.route("/mongotest")
 def mongo():
