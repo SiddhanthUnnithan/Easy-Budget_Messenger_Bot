@@ -165,28 +165,28 @@ def webhook():
 	                    {
 	                        "type": "postback",
 	                        "title": "Set Income Amount",
-	                        "payload": "Payload for first element in a generic bubble"
+	                        "payload": "SET_INCOME"
 	                    }
                     ],
                 }, {
-                    "title": "Add Expenditure",
+                    "title": "Add Expenses",
                     "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "Set Expenditure Amount",
-	                        "payload": "Payload for second element in a generic bubble"
+	                        "title": "Set Expenses Amount",
+	                        "payload": "SET_EXPENSES"
 	                    }
                     ],
                 },
                 {
-                	"title": "Contribute To Your Goal",
+                	"title": "Visualization",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Set Amount To Contribute",
-                			"payload": "Payload for first button in third element"
+                			"title": "Visualize Your Goal",
+                			"payload": "GOAL_VISUALIZATION"
                 		}
                 	]
                 }]
@@ -224,7 +224,14 @@ def webhook():
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
-					pass
+					message_payload = messaging_event["postback"]["payload"]
+
+					if message_payload == "SET_INCOME":
+						pass
+					if message_payload == "SET_EXPENSES":
+						pass
+					if message_payload == "GOAL_VISUALIZATION":
+						pass
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
@@ -258,7 +265,7 @@ def webhook():
 							continue
 						elif state_map["goal_desc"]["answer"] is None:
 							state_map["goal_desc"]["answer"] = message_text
-							#save to mongo	
+							#save to mongo
 
 						if not state_map["goal_amount"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_amount)
@@ -295,7 +302,7 @@ def webhook():
 
 						continue
 
-					if "quick_reply" in messaging_event["message"]:
+					if messaging_event["message"].get("quick_reply"):
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
@@ -325,7 +332,7 @@ def webhook():
 
 
 	return "ok", 200
-	
+
 
 @app.route("/mongotest")
 def mongo():
