@@ -119,7 +119,13 @@ def webhook():
 	# process incoming messaging events
 
 	# retrieve state map from mongo
-	state_map = state_coll.find_one()
+	state_obj = state_coll.find_one()
+
+	state_id = state_obj["_id"]
+
+	state_map = state_obj["map"]
+
+	print state_id
 
 	print state_map
 
@@ -232,7 +238,11 @@ def webhook():
 						if not state_map["goal_title"]["is_message_sent"]:
 							send_message(sender_id, onboarding_greeting)
 							send_message(sender_id, onboarding_goal_title)
-							state_map["goal_title"]["is_message_sent"] = True
+							state_coll.update({"_id": state_id}, {
+								"$set": {
+									"map.goal_title.is_message_sent" = True
+								}
+							}, upsert=False)
 							continue
 						elif state_map["goal_title"]["answer"] is None:
 							state_map["goal_title"]["answer"] = message_text
@@ -240,7 +250,11 @@ def webhook():
 
 						if not state_map["goal_desc"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_desc)
-							state_map["goal_desc"]["is_message_sent"] = True
+							state_coll.update({"_id": state_id}, {
+								"$set": {
+									"map.goal_desc.is_message_sent" = True
+								}
+							}, upsert=False)
 							continue
 						elif state_map["goal_desc"]["answer"] is None:
 							state_map["goal_desc"]["answer"] = message_text
@@ -248,7 +262,11 @@ def webhook():
 
 						if not state_map["goal_amount"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_amount)
-							state_map["goal_amount"]["is_message_sent"] = True
+							state_coll.update({"_id": state_id}, {
+								"$set": {
+									"map.goal_amount.is_message_sent" = True
+								}
+							}, upsert=False)
 							continue
 						elif state_map["goal_amount"]["answer"] is None:
 							state_map["goal_amount"]["answer"] = message_text
@@ -257,15 +275,21 @@ def webhook():
 
 						if not state_map["curr_balance"]["is_message_sent"]:
 							send_message(sender_id, onboarding_curr_balance)
-							state_map["curr_balance"]["is_message_sent"] = True
+							state_coll.update({"_id": state_id}, {
+								"$set": {
+									"map.curr_balance.is_message_sent" = True
+								}
+							}, upsert=False)
 							continue
 						elif state_map["curr_balance"]["answer"] is None:
 							state_map["curr_balance"]["answer"] = message_text
 							# save to mongo
 							# user has completed onboarding - update mongo
-							summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s" \
-								% (state_map["goal_title"]["answer"], state_map["goal_desc"]["answer"],
-								   state_map["goal_amount"]["answer"], state_map["curr_balance"]["answer"])
+							summary = {"text": "worked!"}
+
+							# summary = "Goal Title: %s, Goal Desc: %s, Goal Amount: %s, Current Balance: %s" \
+							# 	% (state_map["goal_title"]["answer"], state_map["goal_desc"]["answer"],
+							# 	   state_map["goal_amount"]["answer"], state_map["curr_balance"]["answer"])
 
 							send_message(sender_id, summary)
 
