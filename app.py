@@ -325,7 +325,7 @@ def webhook():
 								}
 							}, upsert=False)
 
-							send_message(sender_id, summary)
+							send_message(sender_id, {"text": summary})
 
 						continue
 
