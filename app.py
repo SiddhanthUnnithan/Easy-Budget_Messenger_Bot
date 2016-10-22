@@ -189,7 +189,7 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = trxn.find_one({"user_id": sender_id})
+					res = trxn_coll.find_one({"user_id": sender_id})
 
 					if res is None:
 						# onboard user
