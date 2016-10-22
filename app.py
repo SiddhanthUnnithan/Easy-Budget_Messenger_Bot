@@ -166,28 +166,28 @@ def webhook():
 	                    {
 	                        "type": "postback",
 	                        "title": "Set Income Amount",
-	                        "payload": "Payload for first element in a generic bubble"
+	                        "payload": "SET_INCOME"
 	                    }
                     ],
                 }, {
-                    "title": "Add Expenditure",
+                    "title": "Add Expenses",
                     "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "Set Expenditure Amount",
-	                        "payload": "Payload for second element in a generic bubble"
+	                        "title": "Set Expenses Amount",
+	                        "payload": "SET_EXPENSES"
 	                    }
                     ],
                 },
                 {
-                	"title": "Contribute To Your Goal",
+                	"title": "Visualization",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Set Amount To Contribute",
-                			"payload": "Payload for first button in third element"
+                			"title": "Visualize Your Goal",
+                			"payload": "GOAL_VISUALIZATION"
                 		}
                 	]
                 }]
@@ -225,14 +225,21 @@ def webhook():
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
-					pass
+					message_payload = messaging_event["postback"]["payload"]
+
+					if message_payload == "SET_INCOME":
+						pass
+					if message_payload == "SET_EXPENSES":
+						pass
+					if message_payload == "GOAL_VISUALIZATION":
+						pass
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = user_coll.find_one({"user_id": sender_id})
+					res = user_coll.find_one({"user_id": int(sender_id)})
 
 					if res is None:
 						# insert user in collection
@@ -274,12 +281,14 @@ def webhook():
 								}
 							}, upsert=False)
 							continue
+
 						elif goal_coll.find_one({"user_id": sender_id})["goal_desc"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
 									"goal_desc" : message_text 
 								}
 							}, upsert=False)	
+
 
 						if not state_map["goal_amount"]["is_message_sent"]:
 							send_message(sender_id, onboarding_goal_amount)
@@ -334,7 +343,7 @@ def webhook():
 
 					# expenses
 
-					if "quick_reply" in messaging_event["message"]:
+					if messaging_event["message"].get("quick_reply"):
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
