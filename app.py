@@ -115,6 +115,42 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
+	# messageData = {
+	# 	"attachment": {
+	# 		"type": "template",
+	# 		"payload": {
+	# 			"template_type": "generic",
+	# 			"elements": [
+	# 			{
+ #                    "title": "Income",
+ #                    "subtitle": "Add Instantaneous Income Stream",
+ #                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+ #                    "buttons": [
+	#                     {
+	#                         "type": "postback",
+	#                         "title": "Set Recurring Income",
+	#                         "payload": "Payload for first element in a generic bubble",
+	#                     }
+ #                    ],
+ #                }, {
+ #                    "title": "Add Expenditure",
+ #                    "subtitle": "Element #2 of an hscroll",
+ #                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+ #                    "buttons": [
+	#                     {
+	#                         "type": "postback",
+	#                         "title": "Postback",
+	#                         "payload": "Payload for second element in a generic bubble",
+	#                     }
+ #                    ],
+ #                },
+ #                {
+ #                	"title": "Set A Goal"
+ #                }]
+	# 		}
+	# 	}
+	# }
+
 	if data["object"] == "page":
 
 		for entry in data["entry"]:
@@ -140,12 +176,6 @@ def webhook():
 					pass
 
 	return "ok", 200
-
-#
-# @app.route("/test")
-# def test():
-# 	data = pd.DataFrame([1,2,3])[0].tolist()
-# 	return jsonify(values=data)
 
 
 @app.route("/mongotest")
