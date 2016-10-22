@@ -240,7 +240,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_title)
 							state_coll.update({"_id": state_id}, {
 								"$set": {
-									"map.goal_title.is_message_sent" = True
+									"map.goal_title.is_message_sent": True
 								}
 							}, upsert=False)
 							continue
@@ -252,7 +252,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_desc)
 							state_coll.update({"_id": state_id}, {
 								"$set": {
-									"map.goal_desc.is_message_sent" = True
+									"map.goal_desc.is_message_sent": True
 								}
 							}, upsert=False)
 							continue
@@ -264,7 +264,7 @@ def webhook():
 							send_message(sender_id, onboarding_goal_amount)
 							state_coll.update({"_id": state_id}, {
 								"$set": {
-									"map.goal_amount.is_message_sent" = True
+									"map.goal_amount.is_message_sent": True
 								}
 							}, upsert=False)
 							continue
@@ -277,7 +277,7 @@ def webhook():
 							send_message(sender_id, onboarding_curr_balance)
 							state_coll.update({"_id": state_id}, {
 								"$set": {
-									"map.curr_balance.is_message_sent" = True
+									"map.curr_balance.is_message_sent": True
 								}
 							}, upsert=False)
 							continue
