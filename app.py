@@ -457,11 +457,11 @@ def webhook():
 						 transportation_expense_categories,
 						 personal_expense_categories]
 
-	subcategory_dicts = map(lambda x: x["attachment"]["payload"]["elements"])
+	subcategory_dicts = map(lambda x: x["attachment"]["payload"]["elements"], subcategory_dicts)
 
 	log(subcategory_dicts)
 
-	for elem in map(lambda x: x["attachment"]["payload"]["elements"], subcategory_dicts):
+	for elem in sum(subcategory_dicts):
 		expense_subcategories.append(elem["buttons"]["payload"])
 		subcategory_map[elem["buttons"]["payload"]] = elem["title"]
 
