@@ -238,6 +238,7 @@ def webhook():
 					print "Entered payload"
 
 					if message_payload == "SET_INCOME":
+						send_message(sender_id, income_amount_prompt)
 						state_coll.update({"_id": state_id}, {
 							"$set": {
 								"map.income.flow_instantiated": True
