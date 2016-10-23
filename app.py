@@ -107,6 +107,13 @@ def webhook():
 		"text": ""
 	}
 
+	colour_map = {
+		"red": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png",
+		"green": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Flag_of_Libya_(1977-2011).svg/2000px-Flag_of_Libya_(1977-2011).svg.png",
+		"gold": "https://files.graphiq.com/2307/media/images/t2/Gold_Metallic_1395343.png",
+		"blue": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Color-blue.JPG"
+	}
+
 	main_carousel = {
 		"attachment": {
 			"type": "template",
@@ -115,7 +122,7 @@ def webhook():
 				"elements": [
 				{
                     "title": "Log Expenses",
-                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png",
+                    "image_url": colour_map["red"],
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -125,7 +132,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Log Income",
-                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Flag_of_Libya_(1977-2011).svg/2000px-Flag_of_Libya_(1977-2011).svg.png",
+                    "image_url": colour_map["green"],
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -135,7 +142,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Manage Goal",
-                    "image_url": "https://files.graphiq.com/2307/media/images/t2/Gold_Metallic_1395343.png",
+                    "image_url": colour_map["gold"],
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -150,7 +157,7 @@ def webhook():
                     ],
                 }, {
                 	"title": "Progress",
-                	"image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Color-blue.JPG",
+                	"image_url": colour_map["blue"],
                 	"buttons": [
                 		{
                 			"type": "postback",
@@ -171,7 +178,7 @@ def webhook():
 				"elements": [
 				{
                     "title": "Wages",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "image_url": colour_map["green"],
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -181,7 +188,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Benefits",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "image_url": colour_map["green"],
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -192,7 +199,7 @@ def webhook():
                 },
                 {
                 	"title": "Self-business",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"image_url": colour_map["green"],
                 	"buttons": [
                 		{
                 			"type": "postback",
@@ -203,7 +210,7 @@ def webhook():
                 },
 				{
                 	"title": "Other",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"image_url": colour_map["green"],
                 	"buttons": [
                 		{
                 			"type": "postback",
@@ -248,7 +255,7 @@ def webhook():
 				"elements": [
 				{
 					"title": "Housing Expenses",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["red"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -258,7 +265,7 @@ def webhook():
 					]
 				}, {
 					"title": "Transporation Expenses",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["red"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -268,7 +275,7 @@ def webhook():
 					]
 				}, {
 					"title": "Living Expenses",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["red"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -278,7 +285,7 @@ def webhook():
 					]
 				}, {
 					"title": "Personal Expenses",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["red"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -299,7 +306,7 @@ def webhook():
 				"elements": [
 				{
 					"title": "Rent",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -309,7 +316,7 @@ def webhook():
 					]
 				}, {
 					"title": "Hydro",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -319,7 +326,7 @@ def webhook():
 					]
 				}, {
 					"title": "Cable or Internet",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -329,7 +336,7 @@ def webhook():
 					]
 				}, {
 					"title": "Phone",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -350,7 +357,7 @@ def webhook():
 				"elements": [
 				{
 					"title": "Car",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -360,7 +367,7 @@ def webhook():
 					]
 				}, {
 					"title": "Gas",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -370,7 +377,7 @@ def webhook():
 					]
 				}, {
 					"title": "Parking",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -380,7 +387,7 @@ def webhook():
 					]
 				}, {
 					"title": "Public Transit",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -401,7 +408,7 @@ def webhook():
 				"elements": [
 				{
 					"title": "Food",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -411,7 +418,7 @@ def webhook():
 					]
 				}, {
 					"title": "Clothing",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -421,7 +428,7 @@ def webhook():
 					]
 				}, {
 					"title": "Childcare",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -431,7 +438,7 @@ def webhook():
 					]
 				}, {
 					"title": "Loan",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -441,7 +448,7 @@ def webhook():
 					]
 				}, {
 					"title": "Credit Card",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -462,7 +469,7 @@ def webhook():
 				"elements": [
 				{
 					"title": "Recreation",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -472,7 +479,7 @@ def webhook():
 					]
 				}, {
 					"title": "Cigarettes/Alcohol",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -482,7 +489,7 @@ def webhook():
 					]
 				}, {
 					"title": "Gifts/Donations",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -492,7 +499,7 @@ def webhook():
 					]
 				}, {
 					"title": "Vacation/Travel",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -502,7 +509,7 @@ def webhook():
 					]
 				}, {
 					"title": "Eating Out",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"image_url": colour_map["blue"],
 					"buttons": [
 						{
 							"type": "postback",
@@ -683,7 +690,7 @@ def webhook():
 						message = "Great choice! How much would you like to contribute towards your goal?"
 
 						send_message(sender_id, {"text": message})
-						
+
 					elif message_payload == "VIEW_GOAL_PROGRESS":
 						continue
 
@@ -717,7 +724,7 @@ def webhook():
 							goal_coll.insert({
 								"user_id": sender_id, "goal_title": None,
 							 	"goal_desc": None, "goal_amount": None,
-							 	"is_achieved": False, 
+							 	"is_achieved": False,
 							 	"contribution_amount": 0.0
 							 })
 
@@ -901,7 +908,7 @@ def webhook():
 
 						goal_title = goal_obj["goal_title"]
 
-						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)  
+						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)
 
 						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
