@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import datetime as dt
 
 import requests
 from flask import Flask, jsonify, request
@@ -147,6 +148,59 @@ def webhook():
 		}
 	}
 
+	income_subcategory_carousel = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+                    "title": "Wages",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Set Income Amount",
+	                        "payload": "SET_WAGES_INCOME"
+	                    }
+                    ],
+                }, {
+                    "title": "Benefits",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Set Expenses Amount",
+	                        "payload": "SET_BENEFITS_INCOME"
+	                    }
+                    ],
+                },
+                {
+                	"title": "Self-business",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "Visualize Your Goal",
+                			"payload": "SET_SELF_BUSINESS_INCOME"
+                		}
+                	]
+                },
+				{
+                	"title": "Other",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "Visualize Your Goal",
+                			"payload": "SET_OTHER_INCOME"
+                		}
+                	]
+                }]
+			}
+		}
+	}
+
 	onboarding_greeting = {
 		"text": "Hey! Prosper Canada wants to make budgeting personal :). I'm here to help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
 	}
@@ -167,6 +221,9 @@ def webhook():
 		"text": "Great, for final touches I'm going to need you to enter your current balance."
 	}
 
+	income_amount_prompt = {"text": "How much did you earn today?"}
+	income_amount_logged = {"text": "Success! We have logged your income successfully :) "}
+
 	if data["object"] == "page":
 
 		for entry in data["entry"]:
@@ -179,7 +236,62 @@ def webhook():
 					message_payload = messaging_event["postback"]["payload"]
 
 					if message_payload == "SET_INCOME":
-						pass
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.flow_instantiated": True
+							}
+						}, upsert=False)
+
+						send_message(sender_id, income_category_carousel)
+
+					if message_payload == "SET_WAGES_INCOME"
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
+							"user_id": sender_id,
+							"category": "income",
+							"subcategory": "wages"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					if message_payload == "SET_BENEFITS_INCOME"
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "income",
+							"subcategory": "benefits"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					if message_payload == "SET_SELF_BUSINESS_INCOME"
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "income",
+							"subcategory": "self_business"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					if message_payload == "SET_OTHER_INCOME"
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "income",
+							"subcategory": "other"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
 					if message_payload == "SET_EXPENSES":
 						pass
 					if message_payload == "GOAL_VISUALIZATION":
@@ -288,6 +400,24 @@ def webhook():
 							send_message(sender_id, main_quick_reply)
 
 						continue
+
+					if state_map["income"]["flow_instantiated"]:
+
+						trxn_coll.update({"_id": state_id}, {
+							"$set": {
+								"amount": float(message_text)
+							}
+						}, upsert=False)
+
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.flow_instantiated": False
+							}
+						}, upsert=False)
+
+						send_message(sender_id, income_amount_logged)
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
 
 
 					if messaging_event["message"].get("quick_reply"):
