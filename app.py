@@ -233,25 +233,16 @@ def webhook():
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
-
-				print "Entered event"
-				print messaging_event
-
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
 					message_payload = messaging_event["postback"]["payload"]
 
-					print "Entered payload"
-
 					if message_payload == "SET_INCOME":
-						send_message(sender_id, income_amount_prompt)
 						state_coll.update({"_id": state_id}, {
 							"$set": {
 								"map.income.flow_instantiated": True
 							}
 						}, upsert=False)
-
-						print "Entered income payload"
 
 						send_message(sender_id, income_category_carousel)
 
