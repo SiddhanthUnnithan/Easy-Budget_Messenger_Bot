@@ -168,14 +168,14 @@ def webhook():
 	                    }
                     ],
                 }, {
-                	"title": "Progress",
+                	"title": "View Progress",
                 	"image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Color-blue.JPG",
                 	"buttons": [
-                		{
-                			"type": "postback",
-                			"title": "Track Your Progress",
-                			"payload": "VIEW_GEN_PROGRESS"
-                		}
+						{
+							"type": "postback",
+							"title": "View Progress",
+							"payload": "TRXN_CAROUSEL"
+						}
                 	]
                 }]
 			}
@@ -213,21 +213,6 @@ def webhook():
                 	"title": "Self-business",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
-						{
-							"type": "postback",
-							"title": "Transaction List",
-							"payload": "LIST_VISUALIZATION"
-						},
-						{
-							"type": "postback",
-							"title": "Summary",
-							"payload": "SUMMARY_VISUALIZATION"
-						},
-						{
-							"type": "postback",
-							"title": "Transactions",
-							"payload": "TRXN_CAROUSEL"
-						},
                 		{
                 			"type": "postback",
                 			"title": "Self employment income",
@@ -549,6 +534,425 @@ def webhook():
 		}
 	}
 
+
+
+	progress_trxn_categories = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+					"title": "Transaction List",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "LIST_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "General Progress",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "SUMMARY_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "All Category",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "ALL_CAT_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "Income",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "Explore Sub-Categories",
+							"payload": "PROGRESS_INCOME_SUBCATEGORIES"
+						}
+					]
+				}, {
+					"title": "Housing Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "Explore Sub-Categories",
+							"payload": "PROGRESS_HOME_SUBCATEGORIES"
+						}
+					]
+				}, {
+					"title": "Transporation Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "Explore Sub-Categories",
+							"payload": "PROGRESS_TRANSP_SUBCATEGORIES"
+						}
+					]
+				}, {
+					"title": "Living Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "Explore Sub-Categories",
+							"payload": "PROGRESS_LIVING_SUBCATEGORIES"
+						}
+					]
+				}, {
+					"title": "Personal Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "Explore Sub-Categories",
+							"payload": "PROGRESS_PERSONAL_SUBCATEGORIES"
+						}
+					]
+				}]
+			}
+		}
+	}
+
+	progress_home_expense_categories = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+					"title": "All Home Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "HOME_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "Rent",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_RENT_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Hydro",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_HYDRO_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Cable or Internet",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_ABLE_INTERNET_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Phone",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_PHONE_EXP_SELECTION"
+						}
+					]
+				}]
+			}
+		}
+	}
+
+	progress_transportation_expense_categories = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+					"title": "All Transportation Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "TRANSPORTATION_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "Car",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_CAR_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Gas",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_GAS_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Parking",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_PARKING_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Public Transit",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_PUBLIC_TRANSIT_EXP_SELECTION"
+						}
+					]
+				}]
+			}
+		}
+	}
+
+	progress_living_expense_categories = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+					"title": "All Living Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "LIVING_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "Food",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_FOOD_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Clothing",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_CLOTHING_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Childcare",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_CHILDCARE_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Loan",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_LOAN_PAYMENT_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Credit Card",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_CREDIT_CARD_EXP_SELECTION"
+						}
+					]
+				}]
+			}
+		}
+	}
+
+	progress_personal_expense_categories = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+					"title": "All Personal Expenses",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PERSONAL_VISUALIZATION"
+						}
+					]
+				}, {
+					"title": "Recreation",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_RECREATION_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Cigarettes/Alcohol",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_CIGARETTE_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Gifts/Donations",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_GIFT_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Vacation/Travel",
+					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_VACATION_EXP_SELECTION"
+						}
+					]
+				}, {
+					"title": "Eating Out",
+					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"buttons": [
+						{
+							"type": "postback",
+							"title": "View",
+							"payload": "PROGRESS_EATING_OUT_EXP_SELECTION"
+						}
+					]
+				}]
+			}
+		}
+	}
+	progress_income_category_carousel = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+                    "title": "All Income",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "View",
+	                        "payload": "INCOME_VISUALIZATION"
+	                    }
+                    ],
+                }, {
+                    "title": "Wages",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "View",
+	                        "payload": "PROGRESS_SET_WAGES_INCOME"
+	                    }
+                    ],
+                }, {
+                    "title": "Benefits",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "View",
+	                        "payload": "PROGRESS_SET_BENEFITS_INCOME"
+	                    }
+                    ],
+                },
+                {
+                	"title": "Self-business",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "View",
+                			"payload": "PROGRESS_SET_SELF_BUSINESS_INCOME"
+                		}
+                	]
+                },
+				{
+                	"title": "Other",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "View",
+                			"payload": "PROGRESS_SET_OTHER_INCOME"
+                		}
+                	]
+                }]
+			}
+		}
+	}
+
 	income_amount_prompt = {"text": "How much did you earn today?"}
 	income_amount_logged = {"text": "We have logged your income successfully :)"}
 
@@ -650,9 +1054,12 @@ def webhook():
 						# send all expense subcategories
 						send_message(sender_id, expense_categories)
 
-					elif message_payload == "VIEW_GEN_PROGRESS":
-						# payload for displaying visualization links
-						continue
+					elif message_payload == "LIST_VISUALIZATION":
+						send_message(sender_id, {"text": "List visualization: " + listUrl + user_id_url + sender_id})
+
+					elif message_payload == "SUMMARY_VISUALIZATION":
+						send_message(sender_id, {"text": "Summary visualization: " + summaryUrl + user_id_url + sender_id})
+
 					elif message_payload == "HOME_SUBCATEGORIES":
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
@@ -719,24 +1126,79 @@ def webhook():
 						send_message(sender_id, {"text": message})
 
 					elif message_payload == "VIEW_GOAL_PROGRESS":
-						continue
+						send_message(sender_id, {"text": "Goal progress: http://google.com"})
+
+					elif message_payload == "TRXN_CAROUSEL":
+						send_message(sender_id, progress_trxn_categories)
+					elif message_payload == "PROGRESS_INCOME_SUBCATEGORIES":
+						send_message(sender_id, progress_income_category_carousel)
+					elif message_payload == "PROGRESS_HOME_SUBCATEGORIES":
+						send_message(sender_id, progress_home_expense_categories)
+					elif message_payload == "PROGRESS_TRANSP_SUBCATEGORIES":
+						send_message(sender_id, progress_transportation_expense_categories)
+					elif message_payload == "PROGRESS_LIVING_SUBCATEGORIES":
+						send_message(sender_id, progress_living_expense_categories)
+					elif message_payload == "PROGRESS_PERSONAL_SUBCATEGORIES":
+						send_message(sender_id, progress_personal_expense_categories)
+					elif message_payload == "ALL_CAT_VISUALIZATION":
+						send_message(sender_id, {"text": "All Category progress: " + listUrl + user_id_url + sender_id})
+					elif message_payload == "HOME_VISUALIZATION":
+						send_message(sender_id, {"text": "Home Category progress: " + listUrl + user_id_url + sender_id + category_url + "housing_expenses"})
+					elif message_payload == "TRANSPORTATION_VISUALIZATION":
+						send_message(sender_id, {"text": "Transportation Category progress: " + listUrl + user_id_url + sender_id + category_url + "transportation_expenses"})
+					elif message_payload == "LIVING_VISUALIZATION":
+						send_message(sender_id, {"text": "Living Category progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses"})
+					elif message_payload == "PERSONAL_VISUALIZATION":
+						send_message(sender_id, {"text": "Personal Category progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses"})
+					elif message_payload == "INCOME_VISUALIZATION":
+						send_message(sender_id, {"text": "Income Category progress: " + listUrl + user_id_url + sender_id + category_url + "Income"})
+					elif message_payload == "PROGRESS_RENT_EXP_SELECTION":
+						send_message(sender_id, {"text": "Rent progress: " + listUrl + user_id_url + sender_id + category_url + "housing_expenses" + subcategory_url + "rent"})
+					elif message_payload == "PROGRESS_HYDRO_EXP_SELECTION":
+						send_message(sender_id, {"text": "Hydro progress: " + listUrl + user_id_url + sender_id + category_url + "housing_expenses" + subcategory_url + "hydro"})
+					elif message_payload == "PROGRESS_ABLE_INTERNET_EXP_SELECTION":
+						send_message(sender_id, {"text": "Internet progress: " + listUrl + user_id_url + sender_id + category_url + "housing_expenses" + subcategory_url + "internet"})
+					elif message_payload == "PROGRESS_PHONE_EXP_SELECTION":
+						send_message(sender_id, {"text": "Phone progress: " + listUrl + user_id_url + sender_id + category_url + "housing_expenses" + subcategory_url + "phone"})
+					elif message_payload == "PROGRESS_CAR_EXP_SELECTION":
+						send_message(sender_id, {"text": "Car progress: " + listUrl + user_id_url + sender_id + category_url + "transportation_expenses" + subcategory_url + "car"})
+					elif message_payload == "PROGRESS_GAS_EXP_SELECTION":
+						send_message(sender_id, {"text": "Gas progress: " + listUrl + user_id_url + sender_id + category_url + "transportation_expenses" + subcategory_url + "gas"})
+					elif message_payload == "PROGRESS_PARKING_EXP_SELECTION":
+						send_message(sender_id, {"text": "Parking progress: " + listUrl + user_id_url + sender_id + category_url + "transportation_expenses" + subcategory_url + "parking"})
+					elif message_payload == "PROGRESS_PUBLIC_TRANSIT_EXP_SELECTION":
+						send_message(sender_id, {"text": "Public Transit progress: " + listUrl + user_id_url + sender_id + category_url + "transportation_expenses" + subcategory_url + "public_transit"})
+					elif message_payload == "PROGRESS_FOOD_EXP_SELECTION":
+						send_message(sender_id, {"text": "Food progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses" + subcategory_url + "food"})
+					elif message_payload == "PROGRESS_CLOTHING_EXP_SELECTION":
+						send_message(sender_id, {"text": "Clothing progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses" + subcategory_url + "clothing"})
+					elif message_payload == "PROGRESS_CHILDCARE_EXP_SELECTION":
+						send_message(sender_id, {"text": "Childcare progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses" + subcategory_url + "childcare"})
+					elif message_payload == "PROGRESS_LOAN_PAYMENT_EXP_SELECTION":
+						send_message(sender_id, {"text": "Loan Payment progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses" + subcategory_url + "loan_payment"})
+					elif message_payload == "PROGRESS_CREDIT_CARD_EXP_SELECTION":
+						send_message(sender_id, {"text": "Credit Card progress: " + listUrl + user_id_url + sender_id + category_url + "living_expenses" + subcategory_url + "credit_card"})
+					elif message_payload == "PROGRESS_RECREATION_EXP_SELECTION":
+						send_message(sender_id, {"text": "Recreation progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses" + subcategory_url + "recreation"})
+					elif message_payload == "PROGRESS_CIGARETTE_EXP_SELECTION":
+						send_message(sender_id, {"text": "Cigartte progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses" + subcategory_url + "cigarette"})
+					elif message_payload == "PROGRESS_GIFT_EXP_SELECTION":
+						send_message(sender_id, {"text": "Gift progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses" + subcategory_url + "gift"})
+					elif message_payload == "PROGRESS_VACATION_EXP_SELECTION":
+						send_message(sender_id, {"text": "Vacation progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses" + subcategory_url + "vacation"})
+					elif message_payload == "PROGRESS_EATING_OUT_EXP_SELECTION":
+						send_message(sender_id, {"text": "Eating Out progress: " + listUrl + user_id_url + sender_id + category_url + "personal_expenses" + subcategory_url + "eating_out"})
+					elif message_payload == "PROGRESS_SET_WAGES_INCOME":
+						send_message(sender_id, {"text": "Wages progress: " + listUrl + user_id_url + sender_id + category_url + "Income" + subcategory_url + "Wages"})
+					elif message_payload == "PROGRESS_SET_BENEFITS_INCOME":
+						send_message(sender_id, {"text": "Benefits progress: " + listUrl + user_id_url + sender_id + category_url + "Income" + subcategory_url + "Benefits"})
+					elif message_payload == "PROGRESS_SET_SELF_BUSINESS_INCOME":
+						send_message(sender_id, {"text": "Self-business progress: " + listUrl + user_id_url + sender_id + category_url + "Income" + subcategory_url + "Self Business"})
+					elif message_payload == "PROGRESS_SET_OTHER_INCOME":
+						send_message(sender_id, {"text": "Other progress: " + listUrl + user_id_url + sender_id + category_url + "Income" + subcategory_url + "Other"})
 
 					continue
-					# 	pass
-					# if message_payload == "SET_EXPENSES":
-					# 	pass
-					# if message_payload == "LIST_VISUALIZATION":
-					# 	send_message(sender_id, {"text": "List visualization: " + listUrl + user_id_url + sender_id})
-					# 	continue
-					# if message_payload == "SUMMARY_VISUALIZATION":
-					# 	send_message(sender_id, {"text": "Summary visualization: " + summaryUrl + user_id_url + sender_id})
-					# 	continue
-					# if message_payload == "GOAL_VISUALIZATION":
-					# 	send_message(sender_id, {"text": "Goal visualization: http://google.com"})
-					# 	continue
-					# if message_payload == "TRXN_CAROUSEL":
-					# 	send_message(sender_id, {"text": "To Implement"})
-					# 	continue
+
 					if message_payload == "SEE_BALANCE_YES":
 						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 						send_message(sender_id, main_balance)
