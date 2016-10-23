@@ -72,8 +72,6 @@ def verify():
 def webhook():
 	# process incoming messaging events
 
-	print "YOLO"
-
 	# retrieve state map from mongo
 	state_obj = state_coll.find_one()
 
@@ -162,7 +160,7 @@ def webhook():
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "Set Income Amount",
+	                        "title": "Net Income from wages",
 	                        "payload": "SET_WAGES_INCOME"
 	                    }
                     ],
@@ -172,7 +170,7 @@ def webhook():
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "Set Expenses Amount",
+	                        "title": "Government Benefits",
 	                        "payload": "SET_BENEFITS_INCOME"
 	                    }
                     ],
@@ -183,7 +181,7 @@ def webhook():
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Visualize Your Goal",
+                			"title": "Self employment income",
                 			"payload": "SET_SELF_BUSINESS_INCOME"
                 		}
                 	]
@@ -194,7 +192,7 @@ def webhook():
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Visualize Your Goal",
+                			"title": "Other Income sources",
                 			"payload": "SET_OTHER_INCOME"
                 		}
                 	]
