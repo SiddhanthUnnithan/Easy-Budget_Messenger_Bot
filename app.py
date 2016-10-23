@@ -104,7 +104,7 @@ def webhook():
 	}
 
 	main_balance = {
-		"text": "Your current_balance is $100"
+		"text": ""
 	}
 
 	main_carousel = {
@@ -472,6 +472,8 @@ def webhook():
 			for messaging_event in entry["messaging"]:
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
+				# update current balance template
+				main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
@@ -683,6 +685,8 @@ def webhook():
 								"map.expense.subcategory": None
 							}
 						}, upsert=False)
+
+						main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 						completion_message = "Awesome! Here's a quick summary of your recently added expense: Category [%s], Subcategory [%s], Amount [$%s]." \
 							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
