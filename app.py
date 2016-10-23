@@ -12,6 +12,15 @@ app = Flask(__name__)
 
 ec2_ip = '52.205.251.79'
 
+listUrl = 'propsercanada.com/list&'
+summaryUrl = 'prospercanada.com/summary?'
+statisticsUrl = 'prospercanada.com/statistic?'
+
+user_id_url = 'userId='
+category_url = '&category='
+subcategory_url = '&subcategory='
+
+
 # mongo client instantiation
 client = MongoClient(ec2_ip, 27017)
 db = client.budget
@@ -185,8 +194,18 @@ def webhook():
                 	"buttons": [
 						{
 							"type": "postback",
+							"title": "Transaction List",
+							"payload": "LIST_VISUALIZATION"
+						},
+						{
+							"type": "postback",
+							"title": "Summary",
+							"payload": "SUMMARY_VISUALIZATION"
+						},
+						{
+							"type": "postback",
 							"title": "Transactions",
-							"payload": "TRXN_VISUALIZATION"
+							"payload": "TRXN_CAROUSEL"
 						},
                 		{
                 			"type": "postback",
@@ -235,12 +254,14 @@ def webhook():
 						pass
 					if message_payload == "SET_EXPENSES":
 						pass
-					if message_payload == "TRXN_VISUALIZATION":
-						#get transaction URL
-						send_message(sender_id, {"text": "Transaction visualization: http://google.com"})
+					if message_payload == "LIST_VISUALIZATION":
+						send_message(sender_id, {"text": "List visualization: " + listUrl + user_id_url + sender_id})
+					if message_payload == "SUMMARY_VISUALIZATION":
+						send_message(sender_id, {"text": "Summary visualization: " + summaryUrl + user_id_url + sender_id})
 					if message_payload == "GOAL_VISUALIZATION":
-						#get goal URL
 						send_message(sender_id, {"text": "Goal visualization: http://google.com"})
+					if message_payload == "TRXN_CAROUSEL":
+						send_message(sender_id, {"text": "To Implement"})
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
