@@ -1,5 +1,5 @@
 db.state.insert({
-	"states": ["goal_desc", "goal_title", "goal_amount", "curr_balance"],
+	"states": ["goal_desc", "goal_title", "goal_amount", "curr_balance", "expense"],
 	"map": {
 		"goal_desc": {
 			"is_message_sent": false,
@@ -13,6 +13,12 @@ db.state.insert({
 		}, "curr_balance": {
 			"is_message_sent": false,
 			"answer": null
+		}, "expense": {
+			"flow_instantiated": false,
+			"category": null,
+			"subcategory": null 
+		}, "income": {
+			"flow_instantiated": false
 		}
 	}
 });
