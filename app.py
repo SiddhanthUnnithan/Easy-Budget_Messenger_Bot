@@ -684,9 +684,6 @@ def webhook():
 							}
 						}, upsert=False)
 
-						# update current balance of user
-						user_coll.update({"user_id": sender_id})
-
 						completion_message = "Awesome! Here's a quick summary of your recently added expense: Category [%s], Subcategory [%s], Amount [$%s]." \
 							% (state_map["category"], state_map["subcategory"], message_text)
 
