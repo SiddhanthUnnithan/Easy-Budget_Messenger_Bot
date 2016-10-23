@@ -72,6 +72,8 @@ def verify():
 def webhook():
 	# process incoming messaging events
 
+	print "YOLO"
+
 	# retrieve state map from mongo
 	state_obj = state_coll.find_one()
 
