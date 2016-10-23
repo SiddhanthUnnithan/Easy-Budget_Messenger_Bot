@@ -115,7 +115,7 @@ def webhook():
 				"elements": [
 				{
                     "title": "Log Expenses",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Red_flag.svg/2000px-Red_flag.svg.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -125,7 +125,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Log Income",
-                    "image_url": "http://www.freeiconspng.com/uploads/bag-money-icon--33.png",
+                    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Flag_of_Libya_(1977-2011).svg/2000px-Flag_of_Libya_(1977-2011).svg.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -135,7 +135,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Manage Goal",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "image_url": "https://files.graphiq.com/2307/media/images/t2/Gold_Metallic_1395343.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -150,7 +150,7 @@ def webhook():
                     ],
                 }, {
                 	"title": "Progress",
-                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"image_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Color-blue.JPG",
                 	"buttons": [
                 		{
                 			"type": "postback",
