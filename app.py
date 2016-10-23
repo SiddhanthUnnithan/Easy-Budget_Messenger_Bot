@@ -222,7 +222,7 @@ def webhook():
 	}
 
 	income_amount_prompt = {"text": "How much did you earn today?"}
-	income_amount_logged = {"text": "Success! We have logged your income successfully :) "}
+	income_amount_logged = {"text": "! We have logged your income successfully :) "}
 
 	if data["object"] == "page":
 
@@ -421,6 +421,8 @@ def webhook():
 
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
+
+						continue
 
 
 					if messaging_event["message"].get("quick_reply"):
