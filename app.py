@@ -268,7 +268,7 @@ def webhook():
 					message_text = messaging_event["message"]["text"]
 
 					# check to see if user exists in database
-					res = user_coll.find_one({"user_id": int(sender_id)})
+					res = user_coll.find_one({"user_id": sender_id})
 
 					if res is None or res["is_onboarded"] == False:
 						# onboard user
