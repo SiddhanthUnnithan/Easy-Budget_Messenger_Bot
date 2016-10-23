@@ -650,7 +650,7 @@ def webhook():
 							"$set": {
 								"map.expense.subcategory": subcategory_map[message_payload]
 							}
-						})
+						}, upsert=False)
 						
 						# general message for any of the subcategories
 						message = "Great, now please specify the amount of your expense."
@@ -796,13 +796,13 @@ def webhook():
 							}
 						}, upsert=False)
 
-						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+						# we remove the current balance refresh for now as it is failing
+						# main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 						completion_message = "Awesome! Here's a quick summary of your recently added expense: Category [%s], Subcategory [%s], Amount [$%s]." \
 							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
 
 						send_message(sender_id, {"text": completion_message})
-						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 
 						continue
