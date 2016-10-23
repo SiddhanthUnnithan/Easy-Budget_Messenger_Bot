@@ -3,6 +3,7 @@ import sys
 import json
 import datetime as dt
 import itertools
+import content.py
 
 import requests
 from flask import Flask, jsonify, request
@@ -1214,6 +1215,8 @@ def webhook():
 
 					# check to see if user exists in database
 					res = user_coll.find_one({"user_id": sender_id})
+
+					send_message(sender_id, content.test)
 
 					log("Response: %s" % res)
 
