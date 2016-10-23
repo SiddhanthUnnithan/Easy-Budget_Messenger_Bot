@@ -2,7 +2,10 @@ import os
 import sys
 import json
 import datetime as dt
+<<<<<<< HEAD
 import itertools
+=======
+>>>>>>> 5e31718bbe65576e5ea04b3b3c8487558dcebe4b
 
 import requests
 from flask import Flask, jsonify, request
@@ -149,7 +152,61 @@ def webhook():
 		}
 	}
 
+	income_category_carousel = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+				{
+                    "title": "Wages",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Net Income from wages",
+	                        "payload": "SET_WAGES_INCOME"
+	                    }
+                    ],
+                }, {
+                    "title": "Benefits",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Government Benefits",
+	                        "payload": "SET_BENEFITS_INCOME"
+	                    }
+                    ],
+                },
+                {
+                	"title": "Self-business",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "Self employment income",
+                			"payload": "SET_SELF_BUSINESS_INCOME"
+                		}
+                	]
+                },
+				{
+                	"title": "Other",
+                	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                	"buttons": [
+                		{
+                			"type": "postback",
+                			"title": "Other Income sources",
+                			"payload": "SET_OTHER_INCOME"
+                		}
+                	]
+                }]
+			}
+		}
+	}
+
 	# ONBOARDING MESSAGES
+	
 	onboarding_greeting = {
 		"text": "Hey! Prosper Canada wants to make budgeting personal :). I'm here to help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
 	}
@@ -447,6 +504,9 @@ def webhook():
 		} 
 	}
 
+	income_amount_prompt = {"text": "How much did you earn today?"}
+	income_amount_logged = {"text": "We have logged your income successfully :)"}
+
 	# generate set of sub categories based on dict parsing rules - convenience
 	expense_subcategories = []
 
@@ -473,12 +533,69 @@ def webhook():
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
+				main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
 					message_payload = messaging_event["postback"]["payload"]
 
 					if message_payload == "SET_INCOME":
-						continue
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.flow_instantiated": True
+							}
+						}, upsert=False)
+
+						send_message(sender_id, income_category_carousel)
+
+					elif message_payload == "SET_WAGES_INCOME":
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
+							"user_id": sender_id,
+							"category": "Income",
+							"subcategory": "Wages"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					elif message_payload == "SET_BENEFITS_INCOME":
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "Income",
+							"subcategory": "Benefits"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					elif message_payload == "SET_SELF_BUSINESS_INCOME":
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "Income",
+							"subcategory": "Self Business"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
+					elif message_payload == "SET_OTHER_INCOME":
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": entry["time"],
+							"user_id": sender_id,
+							"category": "Income",
+							"subcategory": "Other"
+						})
+
+						send_message(sender_id, income_amount_prompt)
+
 					elif message_payload == "SET_EXPENSES":
 						# set state to notify expense flow is instantiated
 						state_coll.update({"_id": state_id}, {
@@ -544,7 +661,7 @@ def webhook():
 						message = "Great, now please specify the amount of your expense."
 
 						send_message(sender_id, {"text": message})
-
+					
 					continue
 
 				if messaging_event.get("message"):
@@ -586,7 +703,7 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_title"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_title" : message_text 
+									"goal_title" : message_text
 								}
 							}, upsert=False)
 
@@ -602,9 +719,9 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_desc"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_desc" : message_text 
+									"goal_desc" : message_text
 								}
-							}, upsert=False)	
+							}, upsert=False)
 
 
 						if not state_map["goal_amount"]["is_message_sent"]:
@@ -618,7 +735,7 @@ def webhook():
 						elif goal_coll.find_one({"user_id": sender_id})["goal_amount"] is None:
 							goal_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"goal_amount" : float(message_text) 
+									"goal_amount" : float(message_text)
 								}
 							}, upsert=False)
 							# future work: ask for confirmation
@@ -634,7 +751,7 @@ def webhook():
 						elif user_coll.find_one({"user_id": sender_id})["current_balance"] is None:
 							user_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"current_balance" : float(message_text) 
+									"current_balance" : float(message_text)
 								}
 							}, upsert=False)
 
@@ -646,7 +763,7 @@ def webhook():
 							# update the user record to complete onboarding
 							user_coll.update({"user_id": sender_id}, {
 								"$set": {
-									"is_onboarded" : True 
+									"is_onboarded" : True
 								}
 							}, upsert=False)
 
@@ -654,8 +771,6 @@ def webhook():
 							send_message(sender_id, main_quick_reply)
 
 						continue
-
-					main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 					if state_map["expense"]["flow_instantiated"]:
 						# presumably last stage of expense specification
@@ -692,6 +807,36 @@ def webhook():
 							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
 
 						send_message(sender_id, {"text": completion_message})
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
+
+						continue
+
+					if state_map["income"]["flow_instantiated"]:
+
+						trxn_coll.update({"user_id": sender_id}, {
+							"$set": {
+								"amount": float(message_text)
+							}
+						}, upsert=False)
+
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.flow_instantiated": False
+							}
+						}, upsert=False)
+
+						cur_balance = user_coll.find_one({"user_id": sender_id})["current_balance"]
+
+						user_coll.update({"user_id": sender_id}, {
+							"$set": {
+								"current_balance": float(message_text) + float(cur_balance)
+							}
+						}, upsert=False)
+
+						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+
+						send_message(sender_id, income_amount_logged)
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 
