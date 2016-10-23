@@ -620,7 +620,7 @@ def webhook():
 
 					elif message_payload == "VIEW_GEN_PROGRESS":
 						# payload for displaying visualization links
-						url = "prosper-canada.herokuapp.com/list?userId=%s" % sender_id
+						url = "%s:8080/list?userId=%s" % (ec2_ip, sender_id)
 
 						message = "Please use the following link to navigate to your progress page: %s" % url 
 
