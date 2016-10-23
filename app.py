@@ -141,6 +141,11 @@ def webhook():
 	                        "type": "postback",
 	                        "title": "Contribute To Goal",
 	                        "payload": "CONTRIBUTE_GOAL"
+	                    },
+	                    {
+	                    	"type": "postback",
+	                    	"title": "View Goal Progress",
+	                    	"payload": "VIEW_GOAL_PROGRESS"
 	                    }
                     ],
                 }, {
@@ -150,7 +155,7 @@ def webhook():
                 		{
                 			"type": "postback",
                 			"title": "Track Your Progress",
-                			"payload": "GOAL_VISUALIZATION"
+                			"payload": "VIEW_GEN_PROGRESS"
                 		}
                 	]
                 }]
@@ -611,7 +616,8 @@ def webhook():
 						# send all expense subcategories
 						send_message(sender_id, expense_categories)
 
-					elif message_payload == "GOAL_VISUALIZATION":
+					elif message_payload == "VIEW_GEN_PROGRESS":
+						# payload for displaying visualization links
 						continue
 					elif message_payload == "HOME_SUBCATEGORIES":
 						# set state to keep track of category chosen
@@ -665,6 +671,11 @@ def webhook():
 						message = "Great, now please specify the amount of your expense."
 
 						send_message(sender_id, {"text": message})
+
+					elif message_payload == "CONTRIBUTE_GOAL":
+						continue
+					elif message_payload == "VIEW_GOAL_PROGRESS"
+						continue
 
 					continue
 
