@@ -685,7 +685,7 @@ def webhook():
 						}, upsert=False)
 
 						completion_message = "Awesome! Here's a quick summary of your recently added expense: Category [%s], Subcategory [%s], Amount [$%s]." \
-							% (state_map["category"], state_map["subcategory"], message_text)
+							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
 
 						send_message(sender_id, {"text": completion_message})
 						send_message(sender_id, main_balance)
