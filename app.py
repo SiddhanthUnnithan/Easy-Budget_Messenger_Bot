@@ -231,6 +231,10 @@ def webhook():
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
+
+				print "Entered event"
+				print messaging_event
+
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
 					message_payload = messaging_event["postback"]["payload"]
