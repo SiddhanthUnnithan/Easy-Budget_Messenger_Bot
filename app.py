@@ -460,9 +460,11 @@ def webhook():
 
 	subcategory_dicts = map(lambda x: x["attachment"]["payload"]["elements"], subcategory_dicts)
 
+	subcategory_dicts = list(itertools.chain.from_iterable(subcategory_dicts))
+
 	log(subcategory_dicts)
 
-	for elem in list(itertools.chain.from_iterable(subcategory_dicts)):
+	for elem in subcategory_dicts:
 		expense_subcategories.append(elem["buttons"]["payload"])
 		subcategory_map[elem["buttons"]["payload"]] = elem["title"]
 
