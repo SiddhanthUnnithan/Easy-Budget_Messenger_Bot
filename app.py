@@ -222,7 +222,7 @@ def webhook():
 	}
 
 	income_amount_prompt = {"text": "How much did you earn today?"}
-	income_amount_logged = {"text": "! We have logged your income successfully :) "}
+	income_amount_logged = {"text": "We have logged your income successfully :)"}
 
 	if data["object"] == "page":
 
@@ -425,8 +425,9 @@ def webhook():
 							}
 						}, upsert=False)
 
-						send_message(sender_id, income_amount_logged)
+						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
+						send_message(sender_id, income_amount_logged)
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 
