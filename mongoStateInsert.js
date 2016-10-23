@@ -19,6 +19,8 @@ db.state.insert({
 			"subcategory": null 
 		}, "income": {
 			"flow_instantiated": false
+		}, "goal": {
+			"contribution_flow": false
 		}
 	}
 });
