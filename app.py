@@ -473,6 +473,7 @@ def webhook():
 					message_payload = messaging_event["postback"]["payload"]
 
 					if message_payload == "SET_INCOME":
+						continue
 					elif message_payload == "SET_EXPENSES":
 						# set state to notify expense flow is instantiated
 						state_coll.update({"_id": state_id}, {
