@@ -244,7 +244,7 @@ def webhook():
 
 						send_message(sender_id, income_category_carousel)
 
-					if message_payload == "SET_WAGES_INCOME"
+					if message_payload == "SET_WAGES_INCOME":
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
@@ -256,7 +256,7 @@ def webhook():
 
 						send_message(sender_id, income_amount_prompt)
 
-					if message_payload == "SET_BENEFITS_INCOME"
+					if message_payload == "SET_BENEFITS_INCOME":
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
@@ -268,7 +268,7 @@ def webhook():
 
 						send_message(sender_id, income_amount_prompt)
 
-					if message_payload == "SET_SELF_BUSINESS_INCOME"
+					if message_payload == "SET_SELF_BUSINESS_INCOME":
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
@@ -280,7 +280,7 @@ def webhook():
 
 						send_message(sender_id, income_amount_prompt)
 
-					if message_payload == "SET_OTHER_INCOME"
+					if message_payload == "SET_OTHER_INCOME":
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
