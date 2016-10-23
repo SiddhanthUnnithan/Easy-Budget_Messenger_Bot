@@ -564,7 +564,7 @@ def webhook():
 							"current_balance": None
 						})
 
-					if res is None or res["is_onboarded"] == False:
+					if res is None or not res["is_onboarded"]:
 						log("starting the onboarding..")
 
 						# create goal record in mongo database
