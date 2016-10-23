@@ -1,3 +1,3 @@
-test = {
+thisIsATest = {
     "text": "Does This work?"
 }
