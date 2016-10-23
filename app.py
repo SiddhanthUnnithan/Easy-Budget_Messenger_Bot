@@ -700,12 +700,8 @@ def webhook():
 							continue
 						continue
 
-					if message_text == "Main Menu":
-						send_message(sender_id, main_balance)
-						send_message(sender_id, main_carousel)
-						continue
-
-					send_message(sender_id, main_quick_reply)
+					send_message(sender_id, main_balance)
+					send_message(sender_id, main_carousel)
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
