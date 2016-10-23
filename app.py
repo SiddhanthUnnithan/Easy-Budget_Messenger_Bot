@@ -2,10 +2,7 @@ import os
 import sys
 import json
 import datetime as dt
-<<<<<<< HEAD
 import itertools
-=======
->>>>>>> 5e31718bbe65576e5ea04b3b3c8487558dcebe4b
 
 import requests
 from flask import Flask, jsonify, request
