@@ -559,7 +559,7 @@ def webhook():
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
-							"date": entry["time"],
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
 							"user_id": sender_id,
 							"category": "Income",
 							"subcategory": "Benefits"
@@ -571,7 +571,7 @@ def webhook():
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
-							"date": entry["time"],
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
 							"user_id": sender_id,
 							"category": "Income",
 							"subcategory": "Self Business"
@@ -583,7 +583,7 @@ def webhook():
 						trxn_coll.insert({
 							"user_id": sender_id,
 							"type": "income",
-							"date": entry["time"],
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
 							"user_id": sender_id,
 							"category": "Income",
 							"subcategory": "Other"
@@ -785,7 +785,7 @@ def webhook():
 						current_balance = user_coll.find_one({"user_id":sender_id})["current_balance"]
 						user_coll.update({"user_id":sender_id}, {
 							"current_balance": current_balance - float(message_text)
-						})
+						}, upsert=False)
 
 						# send completion messages
 						state_coll.update({"_id": state_id}, {
