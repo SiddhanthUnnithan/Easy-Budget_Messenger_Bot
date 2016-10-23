@@ -252,8 +252,8 @@ def webhook():
 							"type": "income",
 							"date": dt.datetime.today().strftime("%d-%m-%Y"),
 							"user_id": sender_id,
-							"category": "income",
-							"subcategory": "wages"
+							"category": "Income",
+							"subcategory": "Wages"
 						})
 
 						send_message(sender_id, income_amount_prompt)
@@ -264,8 +264,8 @@ def webhook():
 							"type": "income",
 							"date": entry["time"],
 							"user_id": sender_id,
-							"category": "income",
-							"subcategory": "benefits"
+							"category": "Income",
+							"subcategory": "Benefits"
 						})
 
 						send_message(sender_id, income_amount_prompt)
@@ -276,8 +276,8 @@ def webhook():
 							"type": "income",
 							"date": entry["time"],
 							"user_id": sender_id,
-							"category": "income",
-							"subcategory": "self_business"
+							"category": "Income",
+							"subcategory": "Self Business"
 						})
 
 						send_message(sender_id, income_amount_prompt)
@@ -288,8 +288,8 @@ def webhook():
 							"type": "income",
 							"date": entry["time"],
 							"user_id": sender_id,
-							"category": "income",
-							"subcategory": "other"
+							"category": "Income",
+							"subcategory": "Other"
 						})
 
 						send_message(sender_id, income_amount_prompt)
