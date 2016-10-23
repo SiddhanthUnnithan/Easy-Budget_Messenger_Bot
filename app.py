@@ -249,7 +249,7 @@ def webhook():
 	}
 
 	onboarding_curr_balance = {
-		"text": "Great, for final touches I'm going to need you to enter your current balance."
+		"text": "Perfect, for final touches I'm going to need you to enter your current balance."
 	}
 
 	# EXPENSE MESSAGES
@@ -622,7 +622,7 @@ def webhook():
 						# payload for displaying visualization links
 						url = "prosper-canada.herokuapp.com/list?userId=%s" % sender_id
 
-						message = "Please use the following link to navigate to your progress page: %s" % url 
+						message = "Please use the following link to navigate to your progress page: %s" % url
 
 						send_message(sender_id, {"text": message})
 						send_message(sender_id, main_carousel)
