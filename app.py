@@ -423,7 +423,7 @@ def webhook():
 						}
 					]
 				}, {
-					"title": "Vaction/Travel",
+					"title": "Vacation/Travel",
 					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
 					"buttons": [
 						{
