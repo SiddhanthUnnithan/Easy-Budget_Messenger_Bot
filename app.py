@@ -125,7 +125,7 @@ def webhook():
                     ],
                 }, {
                     "title": "Log Income",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "image_url": "http://www.freeiconspng.com/uploads/bag-money-icon--33.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
@@ -903,7 +903,11 @@ def webhook():
 
 						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)  
 
+						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+						
 						send_message(sender_id, {"text": message})
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
 
 						continue
 
