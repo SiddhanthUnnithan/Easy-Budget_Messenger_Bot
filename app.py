@@ -105,7 +105,7 @@ def webhook():
 	}
 
 	main_balance = {
-		"text": "Your balance is over $9000!!!"
+		"text": "!!!"
 	}
 
 	main_carousel = {
@@ -232,6 +232,8 @@ def webhook():
 			for messaging_event in entry["messaging"]:
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
+
+				main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
@@ -418,6 +420,7 @@ def webhook():
 						}, upsert=False)
 
 						send_message(sender_id, income_amount_logged)
+
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 
@@ -426,7 +429,6 @@ def webhook():
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
-							main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 							send_message(sender_id, main_balance)
 							send_message(sender_id, main_carousel)
 							continue
