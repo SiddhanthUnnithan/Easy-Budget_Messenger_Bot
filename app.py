@@ -673,7 +673,17 @@ def webhook():
 						send_message(sender_id, {"text": message})
 
 					elif message_payload == "CONTRIBUTE_GOAL":
-						continue
+						# indicate that goal contribute is taking place
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.goal.contribution_flow": True
+							}
+						}, upsert=False)
+
+						message = "Great choice! How much would you like to contribute towards your goal?"
+
+						send_message(sender_id, {"text": message})
+						
 					elif message_payload == "VIEW_GOAL_PROGRESS":
 						continue
 
@@ -703,7 +713,7 @@ def webhook():
 						goal_coll.insert(
 							{"user_id": sender_id, "goal_title": None,
 							 "goal_desc": None, "goal_amount": None,
-							 "is_achieved": False})
+							 "is_achieved": False, "contribution_amount": 0.0})
 
 						# onboard user
 						if not state_map["goal_title"]["is_message_sent"]:
@@ -857,6 +867,37 @@ def webhook():
 						send_message(sender_id, income_amount_logged)
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
+
+						continue
+
+					if state_map["goal"]["contribution_flow"]:
+						# amount has been sent back - add to mongo
+						contribution_amount = goal_coll.find_one({"user_id": sender_id})["contribution_amount"]
+
+						goal_coll.update({"user_id": sender_id}, {
+							"$set": {
+								"contribution_amount": contribution_amount + float(message_text)
+							}
+						}, upsert=False)
+
+						# subtract from current balance
+						current_balance = user_coll.find_one({"user_id": sender_id})["current_balance"]
+
+						user_coll.update({"user_id": sender_id}, {
+							"$set": {
+								"current_balance": current_balance - float(message_text)
+							}
+						}, upsert=False)
+
+						goal_obj = goal_coll.find_one({"user_id": sender_id})
+
+						difference = goal_obj["goal_amount"] - goal_obj["contribution_amount"]
+
+						goal_title = goal_obj["goal_title"]
+
+						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)  
+
+						send_message(sender_id, {"text": message})
 
 						continue
 
