@@ -904,7 +904,14 @@ def webhook():
 						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)  
 
 						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
-						
+
+						# set contribution flow to false
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.goal.contribution_flow": False
+							}
+						}, upsert=False)
+
 						send_message(sender_id, {"text": message})
 						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
