@@ -709,11 +709,17 @@ def webhook():
 					if res is None or not res["is_onboarded"]:
 						log("starting the onboarding..")
 
-						# create goal record in mongo database
-						goal_coll.insert(
-							{"user_id": sender_id, "goal_title": None,
-							 "goal_desc": None, "goal_amount": None,
-							 "is_achieved": False, "contribution_amount": 0.0})
+						# check to see if goal exists in database
+						goal_res = goal_coll.find_one({"user_id": sender_id})
+
+						if goal_res is None:
+							# create goal record in mongo database
+							goal_coll.insert({
+								"user_id": sender_id, "goal_title": None,
+							 	"goal_desc": None, "goal_amount": None,
+							 	"is_achieved": False, 
+							 	"contribution_amount": 0.0
+							 })
 
 						# onboard user
 						if not state_map["goal_title"]["is_message_sent"]:
