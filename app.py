@@ -796,7 +796,7 @@ def webhook():
 							}
 						}, upsert=False)
 
-						main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 						completion_message = "Awesome! Here's a quick summary of your recently added expense: Category [%s], Subcategory [%s], Amount [$%s]." \
 							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
