@@ -805,6 +805,7 @@ def webhook():
 							% (state_map["expense"]["category"], state_map["expense"]["subcategory"], message_text)
 
 						send_message(sender_id, {"text": completion_message})
+						send_message(sender_id, main_balance)
 						send_message(sender_id, main_carousel)
 
 						continue
