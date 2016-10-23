@@ -163,6 +163,13 @@ def webhook():
 		}
 	}
 
+	income_map = {
+		"SET_WAGES_INCOME": "Wages",
+		"SET_BENEFITS_INCOME": "Benefits",
+		"SET_SELF_BUSINESS_INCOME": "Self Business",
+		"SET_OTHER_INCOME": "Other"
+	}
+
 	income_category_carousel = {
 		"attachment": {
 			"type": "template",
@@ -558,50 +565,38 @@ def webhook():
 						send_message(sender_id, income_category_carousel)
 
 					elif message_payload == "SET_WAGES_INCOME":
-						trxn_coll.insert({
-							"user_id": sender_id,
-							"type": "income",
-							"date": dt.datetime.today().strftime("%d-%m-%Y"),
-							"user_id": sender_id,
-							"category": "Income",
-							"subcategory": "Wages"
-						})
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.subcategory": income_map[message_payload]
+							}
+						}, upsert=False)
 
 						send_message(sender_id, income_amount_prompt)
 
 					elif message_payload == "SET_BENEFITS_INCOME":
-						trxn_coll.insert({
-							"user_id": sender_id,
-							"type": "income",
-							"date": dt.datetime.today().strftime("%d-%m-%Y"),
-							"user_id": sender_id,
-							"category": "Income",
-							"subcategory": "Benefits"
-						})
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.subcategory": income_map[message_payload]
+							}
+						}, upsert=False)
 
 						send_message(sender_id, income_amount_prompt)
 
 					elif message_payload == "SET_SELF_BUSINESS_INCOME":
-						trxn_coll.insert({
-							"user_id": sender_id,
-							"type": "income",
-							"date": dt.datetime.today().strftime("%d-%m-%Y"),
-							"user_id": sender_id,
-							"category": "Income",
-							"subcategory": "Self Business"
-						})
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.subcategory": income_map[message_payload]
+							}
+						}, upsert=False)
 
 						send_message(sender_id, income_amount_prompt)
 
 					elif message_payload == "SET_OTHER_INCOME":
-						trxn_coll.insert({
-							"user_id": sender_id,
-							"type": "income",
-							"date": dt.datetime.today().strftime("%d-%m-%Y"),
-							"user_id": sender_id,
-							"category": "Income",
-							"subcategory": "Other"
-						})
+						state_coll.update({"_id": state_id}, {
+							"$set": {
+								"map.income.subcategory": income_map[message_payload]
+							}
+						}, upsert=False)
 
 						send_message(sender_id, income_amount_prompt)
 
@@ -848,11 +843,17 @@ def webhook():
 
 					if state_map["income"]["flow_instantiated"]:
 
-						trxn_coll.update({"user_id": sender_id}, {
-							"$set": {
-								"amount": float(message_text)
-							}
-						}, upsert=False)
+						subcategory = state_map["income"]["subcategory"]
+
+						trxn_coll.insert({
+							"user_id": sender_id,
+							"type": "income",
+							"date": dt.datetime.today().strftime("%d-%m-%Y"),
+							"amount": float(message_text),
+							"user_id": sender_id,
+							"category": "Income",
+							"subcategory": subcategory
+						})
 
 						state_coll.update({"_id": state_id}, {
 							"$set": {
@@ -942,8 +943,6 @@ def webhook():
 				if messaging_event.get("optin"):
 					# optin confirmation
 					pass
-
-
 
 	return "ok", 200
 
