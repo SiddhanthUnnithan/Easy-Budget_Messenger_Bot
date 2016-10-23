@@ -114,33 +114,42 @@ def webhook():
 				"template_type": "generic",
 				"elements": [
 				{
-                    "title": "Add Income",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-                    "buttons": [
-	                    {
-	                        "type": "postback",
-	                        "title": "Set Income Amount",
-	                        "payload": "SET_INCOME"
-	                    }
-                    ],
-                }, {
-                    "title": "Add Expenses",
+                    "title": "Log Expenses",
                     "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "Set Expense Amount",
+	                        "title": "Add New Expense",
 	                        "payload": "SET_EXPENSES"
 	                    }
                     ],
-                },
-                {
-                	"title": "Visualization",
+                }, {
+                    "title": "Log Income",
+                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Add New Income",
+	                        "payload": "SET_INCOME"
+	                    }
+                    ],
+                }, {
+                    "title": "Manage Goal",
+                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "buttons": [
+	                    {
+	                        "type": "postback",
+	                        "title": "Contribute To Goal",
+	                        "payload": "CONTRIBUTE_GOAL"
+	                    }
+                    ],
+                }, {
+                	"title": "Progress",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
                 		{
                 			"type": "postback",
-                			"title": "Visualize Your Goal",
+                			"title": "Track Your Progress",
                 			"payload": "GOAL_VISUALIZATION"
                 		}
                 	]
@@ -203,7 +212,7 @@ def webhook():
 	}
 
 	# ONBOARDING MESSAGES
-	
+
 	onboarding_greeting = {
 		"text": "Hey! Prosper Canada wants to make budgeting personal :). I'm here to help you set and achieve your financial goals by making it easy for you to track your income and expenses!"
 	}
@@ -498,7 +507,7 @@ def webhook():
 					]
 				}]
 			}
-		} 
+		}
 	}
 
 	income_amount_prompt = {"text": "How much did you earn today?"}
@@ -511,7 +520,7 @@ def webhook():
 	# we store title in the database
 	subcategory_map = {}
 
-	subcategory_dicts = [home_expense_categories, living_expense_categories, 
+	subcategory_dicts = [home_expense_categories, living_expense_categories,
 						 transportation_expense_categories,
 						 personal_expense_categories]
 
@@ -623,7 +632,7 @@ def webhook():
 						}, upsert=False)
 
 						send_message(sender_id, transportation_expense_categories)
-						
+
 					elif message_payload == "LIVING_SUBCATEGORIES":
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
@@ -631,9 +640,9 @@ def webhook():
 								"map.expense.category": "living_expenses"
 							}
 						}, upsert=False)
-						
+
 						send_message(sender_id, living_expense_categories)
-						
+
 					elif message_payload == "PERSONAL_SUBCATEGORIES":
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
@@ -641,7 +650,7 @@ def webhook():
 								"map.expense.category": "personal_expenses"
 							}
 						}, upsert=False)
-						
+
 						send_message(sender_id, personal_expense_categories)
 
 					elif message_payload in expense_subcategories:
@@ -651,12 +660,12 @@ def webhook():
 								"map.expense.subcategory": subcategory_map[message_payload]
 							}
 						}, upsert=False)
-						
+
 						# general message for any of the subcategories
 						message = "Great, now please specify the amount of your expense."
 
 						send_message(sender_id, {"text": message})
-					
+
 					continue
 
 				if messaging_event.get("message"):
