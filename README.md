@@ -20,3 +20,5 @@ On your Facebook Application you will then need to set up a Webhook with your 'V
 Node: https://github.com/AbhijithRamalingam/gift_the_code_node
 
 Visualizer: https://github.com/kangzeroo/Prosper-Canada-Financebot-Visualizer
+
+Mongo: The data is stored on mogno so you will require a mongo db connection and would need to provide this to the Flask application. If you check the db directory there are commands to deploy a mongo database in a Docker container. 
