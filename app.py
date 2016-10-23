@@ -674,7 +674,7 @@ def webhook():
 
 					elif message_payload == "CONTRIBUTE_GOAL":
 						continue
-					elif message_payload == "VIEW_GOAL_PROGRESS"
+					elif message_payload == "VIEW_GOAL_PROGRESS":
 						continue
 
 					continue
