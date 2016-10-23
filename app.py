@@ -148,7 +148,7 @@ def webhook():
 		}
 	}
 
-	income_subcategory_carousel = {
+	income_category_carousel = {
 		"attachment": {
 			"type": "template",
 			"payload": {
@@ -235,12 +235,16 @@ def webhook():
 					# user clicked/tapped "postback" button in earlier message
 					message_payload = messaging_event["postback"]["payload"]
 
+					print "Entered payload"
+
 					if message_payload == "SET_INCOME":
 						state_coll.update({"_id": state_id}, {
 							"$set": {
 								"map.income.flow_instantiated": True
 							}
 						}, upsert=False)
+
+						print "Entered income payload"
 
 						send_message(sender_id, income_category_carousel)
 
