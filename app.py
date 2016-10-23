@@ -141,20 +141,30 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
-	main_quick_reply = {
-		"text": "Would you like to see your balance",
-		"quick_replies": [
-			{
-				"content_type": "text",
-				"title": "Yes",
-				"payload": "SEE_BALANCE_YES"
-			},
-			{
-				"content_type": "text",
-				"title": "No",
-				"payload": "SEE_BALANCE_NO"
+	balance_template = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+					{
+						"title": "Would you like to see your balance",
+						"buttons": [
+							{
+								"type": "postback",
+								"title": "Yes",
+								"payload": "SEE_BALANCE_YES"
+							},
+							{
+								"type": "postback",
+								"title": "No",
+								"payload": "SEE_BALANCE_NO"
+							}
+						]
+					}
+				]
 			}
-		]
+		}
 	}
 
 	main_balance = {
@@ -256,12 +266,23 @@ def webhook():
 						pass
 					if message_payload == "LIST_VISUALIZATION":
 						send_message(sender_id, {"text": "List visualization: " + listUrl + user_id_url + sender_id})
+						continue
 					if message_payload == "SUMMARY_VISUALIZATION":
 						send_message(sender_id, {"text": "Summary visualization: " + summaryUrl + user_id_url + sender_id})
+						continue
 					if message_payload == "GOAL_VISUALIZATION":
 						send_message(sender_id, {"text": "Goal visualization: http://google.com"})
+						continue
 					if message_payload == "TRXN_CAROUSEL":
 						send_message(sender_id, {"text": "To Implement"})
+						continue
+					if message_payload == "SEE_BALANCE_YES":
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
+						continue
+					if message_payload == "SEE_BALANCE_NO":
+						send_message(sender_id, {"text": "Then have a nice day."})
+						continue
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
@@ -332,24 +353,7 @@ def webhook():
 
 						continue
 
-					if messaging_event["message"].get("quick_reply"):
-						message_payload = messaging_event["message"]["quick_reply"]["payload"]
-
-						if message_payload == "SEE_BALANCE_YES":
-							send_message(sender_id, main_balance)
-							send_message(sender_id, main_carousel)
-							continue
-						if message_payload == "SEE_BALANCE_NO":
-							send_message(sender_id, {"text": "Then have a nice day."})
-							continue
-						continue
-
-					if message_text == "Main Menu":
-						send_message(sender_id, main_balance)
-						send_message(sender_id, main_carousel)
-						continue
-
-					send_message(sender_id, main_quick_reply)
+					send_message(sender_id, balance_template)
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
