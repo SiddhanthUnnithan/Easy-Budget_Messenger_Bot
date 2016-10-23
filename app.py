@@ -472,8 +472,6 @@ def webhook():
 			for messaging_event in entry["messaging"]:
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
-				# update current balance template
-				main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
@@ -656,6 +654,8 @@ def webhook():
 							send_message(sender_id, main_quick_reply)
 
 						continue
+
+					main_balance["text"] = "Your current balance is $%s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
 					if state_map["expense"]["flow_instantiated"]:
 						# presumably last stage of expense specification
