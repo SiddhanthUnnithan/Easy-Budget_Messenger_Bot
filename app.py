@@ -405,7 +405,7 @@ def webhook():
 
 					if state_map["income"]["flow_instantiated"]:
 
-						trxn_coll.update({"_id": state_id}, {
+						trxn_coll.update({"user_id": sender_id}, {
 							"$set": {
 								"amount": float(message_text)
 							}
@@ -414,6 +414,14 @@ def webhook():
 						state_coll.update({"_id": state_id}, {
 							"$set": {
 								"map.income.flow_instantiated": False
+							}
+						}, upsert=False)
+
+						cur_balance = user_coll.find_one({"user_id": sender_id})["current_balance"]
+
+						user_coll.update({"user_id": sender_id}, {
+							"$set": {
+								"current_balance": float(message_text) + float(cur_balance)
 							}
 						}, upsert=False)
 
