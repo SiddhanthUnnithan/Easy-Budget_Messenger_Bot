@@ -14,6 +14,15 @@ app = Flask(__name__)
 
 ec2_ip = '52.205.251.79'
 
+listUrl = 'propsercanada.com/list&'
+summaryUrl = 'prospercanada.com/summary?'
+statisticsUrl = 'prospercanada.com/statistic?'
+
+user_id_url = 'userId='
+category_url = '&category='
+subcategory_url = '&subcategory='
+
+
 # mongo client instantiation
 client = MongoClient(ec2_ip, 27017)
 db = client.budget
@@ -87,20 +96,30 @@ def webhook():
 	data = request.get_json()
 	log(data)
 
-	main_quick_reply = {
-		"text": "Would you like to see your balance",
-		"quick_replies": [
-			{
-				"content_type": "text",
-				"title": "Yes",
-				"payload": "SEE_BALANCE_YES"
-			},
-			{
-				"content_type": "text",
-				"title": "No",
-				"payload": "SEE_BALANCE_NO"
+	balance_template = {
+		"attachment": {
+			"type": "template",
+			"payload": {
+				"template_type": "generic",
+				"elements": [
+					{
+						"title": "Would you like to see your balance",
+						"buttons": [
+							{
+								"type": "postback",
+								"title": "Yes",
+								"payload": "SEE_BALANCE_YES"
+							},
+							{
+								"type": "postback",
+								"title": "No",
+								"payload": "SEE_BALANCE_NO"
+							}
+						]
+					}
+				]
 			}
-		]
+		}
 	}
 
 	main_balance = {
@@ -194,6 +213,21 @@ def webhook():
                 	"title": "Self-business",
                 	"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
                 	"buttons": [
+						{
+							"type": "postback",
+							"title": "Transaction List",
+							"payload": "LIST_VISUALIZATION"
+						},
+						{
+							"type": "postback",
+							"title": "Summary",
+							"payload": "SUMMARY_VISUALIZATION"
+						},
+						{
+							"type": "postback",
+							"title": "Transactions",
+							"payload": "TRXN_CAROUSEL"
+						},
                 		{
                 			"type": "postback",
                 			"title": "Self employment income",
@@ -683,11 +717,34 @@ def webhook():
 						message = "Great choice! How much would you like to contribute towards your goal?"
 
 						send_message(sender_id, {"text": message})
-						
+
 					elif message_payload == "VIEW_GOAL_PROGRESS":
 						continue
 
 					continue
+					# 	pass
+					# if message_payload == "SET_EXPENSES":
+					# 	pass
+					# if message_payload == "LIST_VISUALIZATION":
+					# 	send_message(sender_id, {"text": "List visualization: " + listUrl + user_id_url + sender_id})
+					# 	continue
+					# if message_payload == "SUMMARY_VISUALIZATION":
+					# 	send_message(sender_id, {"text": "Summary visualization: " + summaryUrl + user_id_url + sender_id})
+					# 	continue
+					# if message_payload == "GOAL_VISUALIZATION":
+					# 	send_message(sender_id, {"text": "Goal visualization: http://google.com"})
+					# 	continue
+					# if message_payload == "TRXN_CAROUSEL":
+					# 	send_message(sender_id, {"text": "To Implement"})
+					# 	continue
+					if message_payload == "SEE_BALANCE_YES":
+						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
+						send_message(sender_id, main_balance)
+						send_message(sender_id, main_carousel)
+						continue
+					if message_payload == "SEE_BALANCE_NO":
+						send_message(sender_id, {"text": "Then have a nice day."})
+						continue
 
 				if messaging_event.get("message"):
 					# arbitrary message has been received
@@ -717,7 +774,7 @@ def webhook():
 							goal_coll.insert({
 								"user_id": sender_id, "goal_title": None,
 							 	"goal_desc": None, "goal_amount": None,
-							 	"is_achieved": False, 
+							 	"is_achieved": False,
 							 	"contribution_amount": 0.0
 							 })
 
@@ -901,7 +958,7 @@ def webhook():
 
 						goal_title = goal_obj["goal_title"]
 
-						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)  
+						message = "Congrats, you are now $%s away from your goal: %s!" % (difference, goal_title)
 
 						main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 
@@ -918,22 +975,7 @@ def webhook():
 
 						continue
 
-					if messaging_event["message"].get("quick_reply"):
-						message_payload = messaging_event["message"]["quick_reply"]["payload"]
-
-						if message_payload == "SEE_BALANCE_YES":
-							main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
-							send_message(sender_id, main_balance)
-							send_message(sender_id, main_carousel)
-							continue
-						if message_payload == "SEE_BALANCE_NO":
-							send_message(sender_id, {"text": "Then have a nice day."})
-							continue
-						continue
-
-					main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
-					send_message(sender_id, main_balance)
-					send_message(sender_id, main_carousel)
+					send_message(sender_id, balance_template)
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
