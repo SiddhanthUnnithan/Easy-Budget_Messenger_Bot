@@ -533,8 +533,6 @@ def webhook():
 				sender_id = messaging_event["sender"]["id"]
 				recipient_id = messaging_event["recipient"]["id"]
 
-				main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
-
 				if messaging_event.get("postback"):
 					# user clicked/tapped "postback" button in earlier message
 					message_payload = messaging_event["postback"]["payload"]
@@ -846,6 +844,7 @@ def webhook():
 						message_payload = messaging_event["message"]["quick_reply"]["payload"]
 
 						if message_payload == "SEE_BALANCE_YES":
+							main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 							send_message(sender_id, main_balance)
 							send_message(sender_id, main_carousel)
 							continue
@@ -854,6 +853,7 @@ def webhook():
 							continue
 						continue
 
+					main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 					send_message(sender_id, main_balance)
 					send_message(sender_id, main_carousel)
 
