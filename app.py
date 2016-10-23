@@ -192,7 +192,7 @@ def webhook():
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
 							"$set": {
-								"map.expense.category": "housing_expenses"
+								"map.expense.category": "Housing Expenses"
 							}
 						}, upsert=False)
 
@@ -202,7 +202,7 @@ def webhook():
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
 							"$set": {
-								"map.expense.category": "transportation_expenses"
+								"map.expense.category": "Transportation Expenses"
 							}
 						}, upsert=False)
 
@@ -212,7 +212,7 @@ def webhook():
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
 							"$set": {
-								"map.expense.category": "living_expenses"
+								"map.expense.category": "Living Expenses"
 							}
 						}, upsert=False)
 
@@ -222,7 +222,7 @@ def webhook():
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
 							"$set": {
-								"map.expense.category": "personal_expenses"
+								"map.expense.category": "Personal Expenses"
 							}
 						}, upsert=False)
 
