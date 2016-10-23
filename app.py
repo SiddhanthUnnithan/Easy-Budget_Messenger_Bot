@@ -3,7 +3,7 @@ import sys
 import json
 import datetime as dt
 import itertools
-import content.py
+import content
 
 import requests
 from flask import Flask, jsonify, request
