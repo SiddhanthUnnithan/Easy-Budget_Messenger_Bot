@@ -104,7 +104,7 @@ def webhook():
 	}
 
 	main_balance = {
-		"text": "Your balance is over $9000!!!"
+		"text": "Your current_balance is $100"
 	}
 
 	main_carousel = {
@@ -129,7 +129,7 @@ def webhook():
                     "buttons": [
 	                    {
 	                        "type": "postback",
-	                        "title": "",
+	                        "title": "Set Expense Amount",
 	                        "payload": "SET_EXPENSES"
 	                    }
                     ],
@@ -665,6 +665,12 @@ def webhook():
 							"amount": float(message_text),
 							"type": "expense",
 							"date": dt.datetime.today().strftime("%d-%m-%Y")
+						})
+
+						# update the current balance for the user
+						current_balance = user_coll.find_one({"user_id":sender_id})["current_balance"]
+						user_coll.update({"user_id":sender_id}, {
+							"current_balance": current_balance - float(message_text)
 						})
 
 						# send completion messages
