@@ -462,8 +462,6 @@ def webhook():
 
 	subcategory_dicts = list(itertools.chain.from_iterable(subcategory_dicts))
 
-	log(subcategory_dicts)
-
 	for elem in subcategory_dicts:
 		expense_subcategories.append(elem["buttons"][0]["payload"])
 		subcategory_map[elem["buttons"][0]["payload"]] = elem["title"]
@@ -556,6 +554,8 @@ def webhook():
 					# check to see if user exists in database
 					res = user_coll.find_one({"user_id": sender_id})
 
+					log("Response: %s" % res)
+
 					if res is None:
 						# insert user in collection
 						user_coll.insert({
@@ -565,6 +565,8 @@ def webhook():
 						})
 
 					if res is None or res["is_onboarded"] == False:
+						log("starting the onboarding..")
+
 						# create goal record in mongo database
 						goal_coll.insert(
 							{"user_id": sender_id, "goal_title": None,
@@ -676,9 +678,9 @@ def webhook():
 						# send completion messages
 						state_coll.update({"_id": state_id}, {
 							"$set": {
-								"flow_instantiated": False,
-								"category": None,
-								"subcategory": None
+								"map.expense.flow_instantiated": False,
+								"map.expense.category": None,
+								"map.expense.subcategory": None
 							}
 						}, upsert=False)
 
