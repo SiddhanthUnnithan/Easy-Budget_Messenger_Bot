@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import datetime as dt
+import itertools
 
 import requests
 from flask import Flask, jsonify, request
@@ -461,7 +462,7 @@ def webhook():
 
 	log(subcategory_dicts)
 
-	for elem in sum(subcategory_dicts):
+	for elem in list(itertools.chain.from_iterable(subcategory_dicts)):
 		expense_subcategories.append(elem["buttons"]["payload"])
 		subcategory_map[elem["buttons"]["payload"]] = elem["title"]
 
