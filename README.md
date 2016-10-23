@@ -14,3 +14,8 @@ From Facebook you will need to generate a 'PAGE_ACCESS_TOKEN' and add it to your
 As well, you will need to add a 'VERIFY_TOKEN' environment variable to Heroku.
 
 On your Facebook Application you will then need to set up a Webhook with your 'VERIFY_TOKEN' value and your Heroku application host name. Please use the following subscription events: messages, message-postbacks.
+
+## Backend
+
+Node: https://github.com/AbhijithRamalingam/gift_the_code_node
+Visualizer: https://github.com/kangzeroo/Prosper-Canada-Financebot-Visualizer
