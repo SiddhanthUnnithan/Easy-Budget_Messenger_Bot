@@ -465,8 +465,8 @@ def webhook():
 	log(subcategory_dicts)
 
 	for elem in subcategory_dicts:
-		expense_subcategories.append(elem["buttons"]["payload"])
-		subcategory_map[elem["buttons"]["payload"]] = elem["title"]
+		expense_subcategories.append(elem["buttons"][0]["payload"])
+		subcategory_map[elem["buttons"][0]["payload"]] = elem["title"]
 
 	if data["object"] == "page":
 
