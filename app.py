@@ -613,7 +613,13 @@ def webhook():
 
 					elif message_payload == "VIEW_GEN_PROGRESS":
 						# payload for displaying visualization links
-						continue
+						url = "prosper-canada.herokuapp.com/list?userId=%s" % sender_id
+
+						message = "Please use the following link to navigate to your progress page: %s" % url 
+
+						send_message(sender_id, {"text": message})
+						send_message(sender_id, main_carousel)
+
 					elif message_payload == "HOME_SUBCATEGORIES":
 						# set state to keep track of category chosen
 						state_coll.update({"_id": state_id}, {
@@ -798,6 +804,7 @@ def webhook():
 
 						continue
 
+
 					if state_map["expense"]["flow_instantiated"]:
 						# presumably last stage of expense specification
 						category = state_map["expense"]["category"]
@@ -935,6 +942,7 @@ def webhook():
 					main_balance["text"] = "Your balance is: %s" % user_coll.find_one({"user_id": sender_id})["current_balance"]
 					send_message(sender_id, main_balance)
 					send_message(sender_id, main_carousel)
+
 
 				if messaging_event.get("delivery"):
 					# confirm delivery
