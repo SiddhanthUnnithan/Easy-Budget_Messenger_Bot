@@ -59,11 +59,6 @@ main_carousel = {
                         "type": "postback",
                         "title": "Contribute To Goal",
                         "payload": "CONTRIBUTE_GOAL"
-                    },
-                    {
-                        "type": "postback",
-                        "title": "View Goal Progress",
-                        "payload": "VIEW_GOAL_PROGRESS"
                     }
                 ],
             }, {

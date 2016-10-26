@@ -86,9 +86,6 @@ def webhook():
 	print state_map
 
 	data = request.get_json()
-	log(data)
-
-
 
 	income_amount_prompt = {"text": "How much did you earn today?"}
 	income_amount_logged = {"text": "We have logged your income successfully :)"}
@@ -265,8 +262,6 @@ def webhook():
 					# check to see if user exists in database
 					res = user_coll.find_one({"user_id": sender_id})
 
-					log("Response: %s" % res)
-
 					if res is None:
 						# insert user in collection
 						user_coll.insert({
@@ -276,8 +271,6 @@ def webhook():
 						})
 
 					if res is None or not res["is_onboarded"]:
-						log("starting the onboarding..")
-
 						# check to see if goal exists in database
 						goal_res = goal_coll.find_one({"user_id": sender_id})
 
