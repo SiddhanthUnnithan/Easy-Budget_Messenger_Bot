@@ -81,10 +81,6 @@ def webhook():
 
 	state_map = state_obj["map"]
 
-	print state_id
-
-	print state_map
-
 	data = request.get_json()
 
 	income_amount_prompt = {"text": "How much did you earn today?"}
