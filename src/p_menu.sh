@@ -1,5 +1,6 @@
 # logic for creating persistent menu
 # this doesn't need to be created every time the server is instantiated
+
 page_access_token=$1
 
 curl -X POST -H "Content-Type: application/json" -d '{
